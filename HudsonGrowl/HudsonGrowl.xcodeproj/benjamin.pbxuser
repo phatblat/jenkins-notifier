@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	089C165DFE840E0CC02AAC07 /* English */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {917, 467}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 45}";
+		};
+	};
+	256AC3D80F4B6AC300CF3369 /* HudsonGrowlAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {951, 670}}";
+			sepNavSelRange = "{279, 0}";
+			sepNavVisRange = "{0, 335}";
+		};
+	};
+	256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {951, 670}}";
+			sepNavSelRange = "{335, 0}";
+			sepNavVisRange = "{0, 342}";
+		};
+	};
+	256AC3F00F4B6AF500CF3369 /* HudsonGrowl_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {917, 467}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 153}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 43590524108BAF82006ABCD5 /* HudsonGrowl */;
+		activeTarget = 8D1107260486CEB800E47090 /* HudsonGrowl */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* HudsonGrowl */,
+		);
+		codeSenseManager = 43590531108BAFA0006ABCD5 /* Code sense */;
+		executables = (
+			43590524108BAF82006ABCD5 /* HudsonGrowl */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					773,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.XCSCMDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					749,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_SCM_ColumnID,
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					699,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 279733094;
+			PBXWorkspaceStateSaveDate = 279733094;
+		};
+		perUserProjectItems = {
+			43590537108BB36A006ABCD5 = 43590537108BB36A006ABCD5 /* PBXTextBookmark */;
+			43590538108BB36A006ABCD5 = 43590538108BB36A006ABCD5 /* PBXTextBookmark */;
+			4359064A108BBBC9006ABCD5 = 4359064A108BBBC9006ABCD5 /* PBXTextBookmark */;
+			435906A6108BC63A006ABCD5 = 435906A6108BC63A006ABCD5 /* PlistBookmark */;
+			43590701108BCF22006ABCD5 = 43590701108BCF22006ABCD5 /* PBXTextBookmark */;
+			4359093D108D397D006ABCD5 = 4359093D108D397D006ABCD5 /* PBXBookmark */;
+			4359093E108D397D006ABCD5 = 4359093E108D397D006ABCD5 /* PBXBookmark */;
+			43B5FB3810AC61DA00496F36 = 43B5FB3810AC61DA00496F36 /* PBXTextBookmark */;
+			43B5FB3910AC61DA00496F36 = 43B5FB3910AC61DA00496F36 /* PBXTextBookmark */;
+			43B5FB3A10AC61DA00496F36 = 43B5FB3A10AC61DA00496F36 /* PBXTextBookmark */;
+			43B5FB3B10AC61DA00496F36 = 43B5FB3B10AC61DA00496F36 /* PBXTextBookmark */;
+			43B5FB3C10AC61DA00496F36 = 43B5FB3C10AC61DA00496F36 /* PBXTextBookmark */;
+			43B5FB3D10AC61DA00496F36 = 43B5FB3D10AC61DA00496F36 /* PBXTextBookmark */;
+			43B5FB3E10AC61DA00496F36 = 43B5FB3E10AC61DA00496F36 /* PBXTextBookmark */;
+			43B5FB3F10AC61DA00496F36 = 43B5FB3F10AC61DA00496F36 /* PBXTextBookmark */;
+			43B5FB5E10AC620700496F36 = 43B5FB5E10AC620700496F36 /* PBXTextBookmark */;
+			43B5FB7C10AC633A00496F36 = 43B5FB7C10AC633A00496F36 /* PBXTextBookmark */;
+			43B5FB9010AC636700496F36 /* PBXTextBookmark */ = 43B5FB9010AC636700496F36 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 43590530108BAFA0006ABCD5 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {917, 467}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 265}";
+		};
+	};
+	43590524108BAF82006ABCD5 /* HudsonGrowl */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = HudsonGrowl;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	43590530108BAFA0006ABCD5 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	43590531108BAFA0006ABCD5 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	43590537108BB36A006ABCD5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 265;
+		vrLoc = 0;
+	};
+	43590538108BB36A006ABCD5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3F00F4B6AF500CF3369 /* HudsonGrowl_Prefix.pch */;
+		name = "HudsonGrowl_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 153;
+		vrLoc = 0;
+	};
+	435905E6108BB6C8006ABCD5 /* HGrowl.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {951, 670}}";
+			sepNavSelRange = "{1641, 0}";
+			sepNavVisRange = "{0, 1654}";
+		};
+	};
+	435905E7108BB6C8006ABCD5 /* HGrowl.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {951, 1365}}";
+			sepNavSelRange = "{2210, 27}";
+			sepNavVisRange = "{1333, 1234}";
+		};
+	};
+	4359061F108BB9F0006ABCD5 /* SynthesizeSingleton.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {951, 1365}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1626}";
+		};
+	};
+	43590643108BBAB5006ABCD5 /* Growl.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = Growl.h;
+		path = /Users/benjamin/Development/Personal/HudsonGrowl/Growl.framework/Headers/Growl.h;
+		sourceTree = "<absolute>";
+	};
+	4359064A108BBBC9006ABCD5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43590643108BBAB5006ABCD5 /* Growl.h */;
+		name = "Growl.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 130;
+		vrLoc = 0;
+	};
+	43590651108BBC8D006ABCD5 /* MyController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {951, 670}}";
+			sepNavSelRange = "{364, 0}";
+			sepNavVisRange = "{0, 771}";
+		};
+	};
+	43590652108BBC8D006ABCD5 /* MyController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {951, 3042}}";
+			sepNavSelRange = "{40, 0}";
+			sepNavVisRange = "{0, 1185}";
+		};
+	};
+	435906A6108BC63A006ABCD5 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* HudsonGrowl-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/benjamin/Development/Personal/HudsonGrowl/HudsonGrowl-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	43590701108BCF22006ABCD5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C165DFE840E0CC02AAC07 /* English */;
+		name = "InfoPlist.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 45;
+		vrLoc = 0;
+	};
+	435907F2108C4CD4006ABCD5 /* HudsonResult.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {951, 670}}";
+			sepNavSelRange = "{424, 197}";
+			sepNavVisRange = "{0, 628}";
+		};
+	};
+	435907F3108C4CD4006ABCD5 /* HudsonResult.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {951, 670}}";
+			sepNavSelRange = "{151, 0}";
+			sepNavVisRange = "{0, 886}";
+		};
+	};
+	4359093D108D397D006ABCD5 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 43590872108D0607006ABCD5 /* Clear Green Button.png */;
+	};
+	4359093E108D397D006ABCD5 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 43590871108D0607006ABCD5 /* Cancel Red Button.png */;
+	};
+	43B5FB3810AC61DA00496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 435905E6108BB6C8006ABCD5 /* HGrowl.h */;
+		name = "HGrowl.h: 47";
+		rLen = 0;
+		rLoc = 1641;
+		rType = 0;
+		vrLen = 1654;
+		vrLoc = 0;
+	};
+	43B5FB3910AC61DA00496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 435905E7108BB6C8006ABCD5 /* HGrowl.m */;
+		name = "HGrowl.m: 70";
+		rLen = 27;
+		rLoc = 2210;
+		rType = 0;
+		vrLen = 1234;
+		vrLoc = 1333;
+	};
+	43B5FB3A10AC61DA00496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D80F4B6AC300CF3369 /* HudsonGrowlAppDelegate.h */;
+		name = "HudsonGrowlAppDelegate.h: 12";
+		rLen = 0;
+		rLoc = 279;
+		rType = 0;
+		vrLen = 335;
+		vrLoc = 0;
+	};
+	43B5FB3B10AC61DA00496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */;
+		name = "HudsonGrowlAppDelegate.m: 17";
+		rLen = 0;
+		rLoc = 335;
+		rType = 0;
+		vrLen = 342;
+		vrLoc = 0;
+	};
+	43B5FB3C10AC61DA00496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 435907F2108C4CD4006ABCD5 /* HudsonResult.h */;
+		name = "HudsonResult.h: 24";
+		rLen = 197;
+		rLoc = 424;
+		rType = 0;
+		vrLen = 628;
+		vrLoc = 0;
+	};
+	43B5FB3D10AC61DA00496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 435907F3108C4CD4006ABCD5 /* HudsonResult.m */;
+		name = "HudsonResult.m: 8";
+		rLen = 0;
+		rLoc = 151;
+		rType = 0;
+		vrLen = 886;
+		vrLoc = 0;
+	};
+	43B5FB3E10AC61DA00496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43590651108BBC8D006ABCD5 /* MyController.h */;
+		name = "MyController.h: 23";
+		rLen = 0;
+		rLoc = 364;
+		rType = 0;
+		vrLen = 771;
+		vrLoc = 0;
+	};
+	43B5FB3F10AC61DA00496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 4359061F108BB9F0006ABCD5 /* SynthesizeSingleton.h */;
+		name = "SynthesizeSingleton.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1626;
+		vrLoc = 0;
+	};
+	43B5FB5E10AC620700496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43590652108BBC8D006ABCD5 /* MyController.m */;
+		name = "MyController.m: 4";
+		rLen = 0;
+		rLoc = 40;
+		rType = 0;
+		vrLen = 1187;
+		vrLoc = 0;
+	};
+	43B5FB7C10AC633A00496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43590652108BBC8D006ABCD5 /* MyController.m */;
+		name = "MyController.m: 4";
+		rLen = 0;
+		rLoc = 40;
+		rType = 0;
+		vrLen = 1187;
+		vrLoc = 0;
+	};
+	43B5FB9010AC636700496F36 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 43590652108BBC8D006ABCD5 /* MyController.m */;
+		name = "MyController.m: 4";
+		rLen = 0;
+		rLoc = 40;
+		rType = 0;
+		vrLen = 1185;
+		vrLoc = 0;
+	};
+	8D1107260486CEB800E47090 /* HudsonGrowl */ = {
+		activeExec = 0;
+		executables = (
+			43590524108BAF82006ABCD5 /* HudsonGrowl */,
+		);
+	};
+}
