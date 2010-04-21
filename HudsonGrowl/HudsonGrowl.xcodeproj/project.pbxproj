@@ -21,6 +21,11 @@
 		43590880108D087D006ABCD5 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4359087D108D087D006ABCD5 /* icon2.png */; };
 		43590885108D08F1006ABCD5 /* menu_failure.png in Resources */ = {isa = PBXBuildFile; fileRef = 43590883108D08F1006ABCD5 /* menu_failure.png */; };
 		43590886108D08F1006ABCD5 /* menu_success.png in Resources */ = {isa = PBXBuildFile; fileRef = 43590884108D08F1006ABCD5 /* menu_success.png */; };
+		8B9BD3631178D37700E2C781 /* CPingTool_Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD35C1178D37700E2C781 /* CPingTool_Private.m */; };
+		8B9BD3641178D37700E2C781 /* CPingTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD35E1178D37700E2C781 /* CPingTool.m */; };
+		8B9BD3651178D37700E2C781 /* NSDate_SysTimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD3601178D37700E2C781 /* NSDate_SysTimeExtensions.m */; };
+		8B9BD3661178D37700E2C781 /* NSHost_PingToolExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD3621178D37700E2C781 /* NSHost_PingToolExtensions.m */; };
+		8BC7EF36117791F900BBE8F3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC7EF35117791F900BBE8F3 /* SystemConfiguration.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -65,8 +70,17 @@
 		4359087D108D087D006ABCD5 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon2.png; path = Resources/icon2.png; sourceTree = "<group>"; };
 		43590883108D08F1006ABCD5 /* menu_failure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_failure.png; path = Resources/menu_failure.png; sourceTree = "<group>"; };
 		43590884108D08F1006ABCD5 /* menu_success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_success.png; path = Resources/menu_success.png; sourceTree = "<group>"; };
+		8B9BD35B1178D37700E2C781 /* CPingTool_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPingTool_Private.h; path = Classes/PingTool/CPingTool_Private.h; sourceTree = "<group>"; };
+		8B9BD35C1178D37700E2C781 /* CPingTool_Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPingTool_Private.m; path = Classes/PingTool/CPingTool_Private.m; sourceTree = "<group>"; };
+		8B9BD35D1178D37700E2C781 /* CPingTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPingTool.h; path = Classes/PingTool/CPingTool.h; sourceTree = "<group>"; };
+		8B9BD35E1178D37700E2C781 /* CPingTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPingTool.m; path = Classes/PingTool/CPingTool.m; sourceTree = "<group>"; };
+		8B9BD35F1178D37700E2C781 /* NSDate_SysTimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDate_SysTimeExtensions.h; path = Classes/PingTool/NSDate_SysTimeExtensions.h; sourceTree = "<group>"; };
+		8B9BD3601178D37700E2C781 /* NSDate_SysTimeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSDate_SysTimeExtensions.m; path = Classes/PingTool/NSDate_SysTimeExtensions.m; sourceTree = "<group>"; };
+		8B9BD3611178D37700E2C781 /* NSHost_PingToolExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSHost_PingToolExtensions.h; path = Classes/PingTool/NSHost_PingToolExtensions.h; sourceTree = "<group>"; };
+		8B9BD3621178D37700E2C781 /* NSHost_PingToolExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSHost_PingToolExtensions.m; path = Classes/PingTool/NSHost_PingToolExtensions.m; sourceTree = "<group>"; };
+		8BC7EF35117791F900BBE8F3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* HudsonGrowl-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HudsonGrowl-Info.plist"; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* HudsonGrowl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HudsonGrowl.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Hudson Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hudson Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +90,7 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				43590588108BB5CD006ABCD5 /* Growl.framework in Frameworks */,
+				8BC7EF36117791F900BBE8F3 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +100,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8B9BD35A1178D36100E2C781 /* PingTool */,
 				4359061F108BB9F0006ABCD5 /* SynthesizeSingleton.h */,
 				435905E6108BB6C8006ABCD5 /* HGrowl.h */,
 				435905E7108BB6C8006ABCD5 /* HGrowl.m */,
@@ -101,6 +117,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8BC7EF35117791F900BBE8F3 /* SystemConfiguration.framework */,
 				43590587108BB5CD006ABCD5 /* Growl.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
@@ -120,7 +137,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* HudsonGrowl.app */,
+				8D1107320486CEB800E47090 /* Hudson Notifier.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -172,12 +189,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8B9BD35A1178D36100E2C781 /* PingTool */ = {
+			isa = PBXGroup;
+			children = (
+				8B9BD35B1178D37700E2C781 /* CPingTool_Private.h */,
+				8B9BD35C1178D37700E2C781 /* CPingTool_Private.m */,
+				8B9BD35D1178D37700E2C781 /* CPingTool.h */,
+				8B9BD35E1178D37700E2C781 /* CPingTool.m */,
+				8B9BD35F1178D37700E2C781 /* NSDate_SysTimeExtensions.h */,
+				8B9BD3601178D37700E2C781 /* NSDate_SysTimeExtensions.m */,
+				8B9BD3611178D37700E2C781 /* NSHost_PingToolExtensions.h */,
+				8B9BD3621178D37700E2C781 /* NSHost_PingToolExtensions.m */,
+			);
+			name = PingTool;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* HudsonGrowl */ = {
+		8D1107260486CEB800E47090 /* Hudson Notifier */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "HudsonGrowl" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Hudson Notifier" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -188,10 +220,10 @@
 			);
 			dependencies = (
 			);
-			name = HudsonGrowl;
+			name = "Hudson Notifier";
 			productInstallPath = "$(HOME)/Applications";
 			productName = HudsonGrowl;
-			productReference = 8D1107320486CEB800E47090 /* HudsonGrowl.app */;
+			productReference = 8D1107320486CEB800E47090 /* Hudson Notifier.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -206,7 +238,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* HudsonGrowl */,
+				8D1107260486CEB800E47090 /* Hudson Notifier */,
 			);
 		};
 /* End PBXProject section */
@@ -240,6 +272,10 @@
 				435905E8108BB6C8006ABCD5 /* HGrowl.m in Sources */,
 				43590653108BBC8D006ABCD5 /* MyController.m in Sources */,
 				435907F4108C4CD4006ABCD5 /* HudsonResult.m in Sources */,
+				8B9BD3631178D37700E2C781 /* CPingTool_Private.m in Sources */,
+				8B9BD3641178D37700E2C781 /* CPingTool.m in Sources */,
+				8B9BD3651178D37700E2C781 /* NSDate_SysTimeExtensions.m in Sources */,
+				8B9BD3661178D37700E2C781 /* NSHost_PingToolExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +318,8 @@
 				GCC_PREFIX_HEADER = HudsonGrowl_Prefix.pch;
 				INFOPLIST_FILE = "HudsonGrowl-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = HudsonGrowl;
+				PRODUCT_NAME = "Hudson Notifier";
+				SDKROOT = macosx10.4;
 			};
 			name = Debug;
 		};
@@ -300,7 +337,8 @@
 				GCC_PREFIX_HEADER = HudsonGrowl_Prefix.pch;
 				INFOPLIST_FILE = "HudsonGrowl-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = HudsonGrowl;
+				PRODUCT_NAME = "Hudson Notifier";
+				SDKROOT = macosx10.4;
 			};
 			name = Release;
 		};
@@ -314,6 +352,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx10.6;
 			};
 			name = Debug;
@@ -326,6 +365,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx10.6;
 			};
 			name = Release;
@@ -333,7 +373,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "HudsonGrowl" */ = {
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Hudson Notifier" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
