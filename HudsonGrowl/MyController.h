@@ -16,31 +16,45 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class HudsonResult;
+@class HudsonResult, CPingTool;
 
 @interface MyController : NSObject {
 	
-	NSWindow* preferences;
-	
-	NSTextField* inputTextField;
+	NSWindow* preferences;	
+	NSTextField *feedsTextField;
+	NSTextField *whitelistTextField;
+	NSTextField *blacklistTextField;
+	NSArray *feeds;
+	NSArray *whitelist;
+	NSArray *blacklist;
 	NSMenu* theMenu;
-	
 	NSStatusItem* theItem;
-	
 	NSTimer* updateTimer;
-	
+	NSUInteger numDefaultMenuItems;	
 	NSMutableDictionary* lastResultsByJob;
 	NSMutableDictionary* menuItemsByJob;
+	NSButton *continuousNotificationCheckbox;
+	BOOL shouldUseContinuousNotifications;
+	NSButton *stickyNotificationCheckbox;
+	BOOL shouldUseStickyNotifications;
+	NSUInteger numConnectableHosts;
+	NSUInteger numUnconnectableHosts;
+	NSTimeInterval pollIntervalInMinutes;
+	CPingTool *currentPingTool;
 }
 
 @property (assign) IBOutlet NSWindow* preferences;
-@property (assign) IBOutlet NSTextField* inputTextField;
 @property (assign) IBOutlet NSMenu* theMenu;
-
-- (IBAction) clickSendGrowlMessage:(id)sender;
+@property (nonatomic, readwrite, retain) IBOutlet NSTextField *feedsTextField;
+@property (nonatomic, readwrite, retain) IBOutlet NSTextField *whitelistTextField;
+@property (nonatomic, readwrite, retain) IBOutlet NSTextField *blacklistTextField;
+@property (nonatomic, readwrite, retain) IBOutlet NSButton *stickyNotificationCheckbox;
+@property (nonatomic, readwrite, retain) IBOutlet NSButton *continuousNotificationCheckbox;
+@property (nonatomic, readwrite, retain) NSStatusItem *theItem;
 
 - (IBAction) clickOpenBuild:(id)sender;
 - (IBAction) clickPreferences:(id)sender;
+- (IBAction) clickSave:(id)sender;
 - (IBAction) clickQuit:(id)sender;
 
 @end

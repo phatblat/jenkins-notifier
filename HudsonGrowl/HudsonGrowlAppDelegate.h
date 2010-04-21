@@ -17,7 +17,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface HudsonGrowlAppDelegate : NSObject <NSApplicationDelegate> {
+#if (MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5)
+@interface HudsonGrowlAppDelegate : NSObject
+#else
+@interface HudsonGrowlAppDelegate : NSObject <NSApplicationDelegate>
+#endif
+{
     NSWindow *window;
 }
 

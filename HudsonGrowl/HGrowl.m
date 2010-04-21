@@ -79,14 +79,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HGrowl, instance);
 							 job:(NSString*)job
 						   title:(NSString*)title
 					 description:(NSString*)desc
-						   image:(NSImage*)img {
+						   image:(NSImage*)img
+						isSticky:(BOOL)isSticky
+{
 	
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
 												notify, @"name",
 												job, @"job",
 												title, @"title",
 												desc, @"desc", 
-												img, @"image", nil];
+												img, @"image", 
+												[NSNumber numberWithBool:isSticky], @"sticky", nil];
 	
 	[self performSelectorOnMainThread:@selector(postOnMainThread:)
 												 withObject:dict
@@ -99,7 +102,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HGrowl, instance);
 						   notificationName:[dict objectForKey:@"name"]
 								   iconData:[[dict objectForKey:@"image"] TIFFRepresentation]
 								   priority:0
-								   isSticky:NO
+								   isSticky:[[dict objectForKey:@"sticky"] boolValue]
 							   clickContext:[dict objectForKey:@"job"]];
 }
 	

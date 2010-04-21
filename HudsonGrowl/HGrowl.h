@@ -44,6 +44,7 @@ extern NSString * const GrowlHudsonFailure;
 							 job:(NSString*)job
 						   title:(NSString*)title
 					 description:(NSString*)desc
-						   image:(NSImage*)img;
+						   image:(NSImage*)img
+						isSticky:(BOOL)isSticky;
 
 @end
