@@ -34,6 +34,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 - (void) openBrowserForResult:(HudsonResult*)result;
 - (void) updateStatus:(NSDictionary*)results;
 - (void) handlePingNotification:(NSNotification *)notification;
+- (void) handlePingNotificationOnMainThread:(NSNotification *)notification;
 - (void) startUpdates:(NSTimer *)theTimer;
 
 @property (nonatomic, readwrite, retain) NSArray *feeds;
@@ -136,10 +137,10 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	self.pollIntervalInMinutes = pollIntervalInMinutesHasValue ? [[NSUserDefaults standardUserDefaults] floatForKey:MyControllerPollIntervalInMinutesKey] : 1.0f; // default to 1 minute
 			
 	// Start looking for valid servers
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotification:) name:TXPingToolDidReceivePacketNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotification:) name:TXPingToolDidLosePacketNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotification:) name:TXPingToolDidFailNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotification:) name:TXPingToolDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidReceivePacketNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidLosePacketNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidFinishNotification object:nil];
 
 	
 	self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:self.pollIntervalInMinutes * 60.0f
@@ -185,14 +186,14 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 }
 
 - (IBAction) clickSave:(id)sender {
-	//DONE: parse each text field into an array, save to disk and local vars
+	// Parse each text field into an array, save to disk and local vars
 	self.feeds = [self stringArrayFromCommaSeparatedList:self.feedsTextField.stringValue];
 	self.whitelist = [self stringArrayFromCommaSeparatedList:self.whitelistTextField.stringValue];	
 	self.blacklist = [self stringArrayFromCommaSeparatedList:self.blacklistTextField.stringValue];
 	self.shouldUseStickyNotifications = ([self.stickyNotificationCheckbox state] == NSOnState) ? YES : NO;
 	self.shouldUseContinuousNotifications = ([self.continuousNotificationCheckbox state] == NSOnState) ? YES : NO;
 	// TODO: Add UI control for poll timer
-//	self.pollIntervalInMinutes = ([self.pollIntervalInMinutesTextField.stringValue floatValue]  // error checking range, int to float, etc
+	// self.pollIntervalInMinutes = ([self.pollIntervalInMinutesTextField.stringValue floatValue]  // error checking range, int to float, etc
 	
 	// Save defaults to disk
 	[[NSUserDefaults standardUserDefaults] setObject:self.feeds forKey:MyControllerFeedsKey];
@@ -205,7 +206,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	
 	[preferences close];
 	
-	//DONE: clear out menu items, if the fields have been changed.
+	// Clear out menu items, as they may have changed.  Set up for a refresh.
 	NSUInteger numMenuItems = [self.theMenu numberOfItems] - self.numDefaultMenuItems; // there's probably a better way to do this
 	for (int menuItemIndex = 0; menuItemIndex < numMenuItems; menuItemIndex++)
 	{
@@ -255,8 +256,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 - (void) parseRSS:(NSURL *)feedURL {
 	// make sure we arent getting a cached response from Cocoa
 	[[NSURLCache sharedURLCache] removeAllCachedResponses];
-
-	NSMutableDictionary* resultsByJob = [[NSMutableDictionary dictionary] autorelease];
+	NSMutableDictionary* resultsByJob = [NSMutableDictionary dictionaryWithCapacity:1];
 	// load the URL into an NSXMLDocument and get the root element	
 	NSXMLDocument* DOM = [[NSXMLDocument alloc] initWithContentsOfURL:feedURL options:NSXMLNodeOptionsNone error:nil];
 	NSXMLElement* root = [DOM rootElement];
@@ -278,7 +278,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 		
 		BOOL hasJob = [scanner scanUpToString:sep intoString:&job];
 		
-		//DONE: only do the rest (of this for loop) if the job name is on the whitelist.  or if blank, do all. (consider a blacklist with -)			
+		// Only save the result if the job name is 1) on the whitelist and not on the blacklist, 2) there is no whitelist, and it is not on the blacklist		
 		[scanner scanString:sep intoString:NULL];
 		BOOL hasNr = [scanner scanInteger:&buildNr];
 		BOOL hasResult = [scanner scanUpToString:@"" intoString:&result];
@@ -303,7 +303,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	
 	[DOM release];
 	
-	[self performSelectorOnMainThread:@selector(updateStatus:) withObject:resultsByJob waitUntilDone:YES];
+	[self updateStatus:resultsByJob];
 }
 
 - (void) updateStatus:(NSDictionary*)results {
@@ -325,7 +325,6 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 				} 
 				else 
 				{
-					// DONE: alphabetize menu items.
 					NSArray *menuItems = [theMenu itemArray];
 					NSEnumerator *menuIterator = [menuItems objectEnumerator];
 					NSMenuItem *menuItem;
@@ -349,8 +348,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 				[indicator setTitle:[NSString stringWithFormat:@"%@ #%d", job, result.buildNr]];
 				[indicator setEnabled:YES];
 			
-				// DONE: Only post the notification if different than last time.  (option, or default?)
-				// DONE: option to post on all notifications (assume default is on change)
+				// Depending on settings: Only post the notification if different than last time OR post on all builds
 				if (lastResult == nil || (self.shouldUseContinuousNotifications && result.success == lastResult.success))
 				{
 					[growl postNotificationWithName:GrowlHudsonSuccess
@@ -376,7 +374,6 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 				[indicator setTitle:[NSString stringWithFormat:@"%@ #%d", job, result.buildNr]];
 				[indicator setEnabled:YES];
 
-				// DONE: Only post the notification if different than last time.  (option, or default?)
 				if (lastResult == nil || self.shouldUseContinuousNotifications || (result.success != lastResult.success))
 				{
 					[growl postNotificationWithName:GrowlHudsonFailure
@@ -415,14 +412,18 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 
 - (BOOL)isHostReachable:(NSString *)hostname
 {	
-	const char *hostNameC = [hostname cStringUsingEncoding:NSASCIIStringEncoding];
-	SCNetworkReachabilityRef target;
-	SCNetworkConnectionFlags flags = 0;
-	Boolean isHostReachable;
-	target = SCNetworkReachabilityCreateWithName(NULL, hostNameC);
-	isHostReachable = SCNetworkReachabilityGetFlags(target, &flags);
-	CFRelease(target);
+	Boolean isHostReachable = false;
 	
+	if ([hostname length] > 0)
+	{
+		const char *hostNameC = [hostname cStringUsingEncoding:NSASCIIStringEncoding];
+		SCNetworkReachabilityRef target;
+		SCNetworkConnectionFlags flags = 0;
+		target = SCNetworkReachabilityCreateWithName(NULL, hostNameC);
+		isHostReachable = SCNetworkReachabilityGetFlags(target, &flags);
+		CFRelease(target);
+	}
+		
 	return isHostReachable ? YES : NO;
 }
 
@@ -431,20 +432,23 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	NSLog(@"### attempting to connect to feed: %@", feed);
 	
 	BOOL initiatedPing = NO;
-	NSURL *feedURL = [NSURL URLWithString:feed];
-	NSHost *host = nil;
-	
-	// DONE: Check if we have an outbound network connection (host is reachable) & and if there is an address mapping
-	if ([self isHostReachable:[feedURL host]] && (host = [NSHost hostWithName:[feedURL host]]) != nil)
+	NSString *hostname = [[NSURL URLWithString:feed] host];
+	BOOL isHostReachable = [hostname length] > 0 && [self isHostReachable:hostname];
+
+	// Check if we have an outbound network connection (host is reachable) & and if there is an address mapping
+	if (isHostReachable)
 	{	
-		// Next ping it to see if it responds
-//		self.currentPingTool = [CPingTool pingToolWithHost:host timeout:0.2f]; // If we get autorelease crashes, try waiting for the finish notification before releasing/reassigning
-		self.currentPingTool = [[CPingTool alloc] init];
-		[self.currentPingTool setHost:host];
-		[self.currentPingTool setTimeout:0.2f];
-		[self.currentPingTool setPingCount:1];
-		[self.currentPingTool ping];
-		initiatedPing = YES;
+		NSHost *host = [NSHost hostWithName:hostname];
+		if (host != nil)
+		{
+			// Next ping it to see if it responds
+			self.currentPingTool = [[[CPingTool alloc] init] autorelease];
+			[self.currentPingTool setHost:host];
+			[self.currentPingTool setTimeout:0.2f];
+			[self.currentPingTool setPingCount:1];
+			[self.currentPingTool ping];
+			initiatedPing = YES;
+		}
 	}
 	
 	return initiatedPing;
@@ -456,8 +460,6 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	NSUInteger numFeeds = [feeds count];
 	NSUInteger numServersTested = self.numConnectableHosts + self.numUnconnectableHosts;
 	
-	// DONE: scan through a comma-separated list of urls
-	// DONE: get url's from preferences window
 	// Cycle through feeds until we successfully initiate a ping.  Once initiated, wait for the notification.
 	while ( (numServersTested < numFeeds) && 
 		   !(initiatedPing = [self pingFeedServer:[feeds objectAtIndex:numServersTested]]) ) 
@@ -491,14 +493,17 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	[self nextUpdate];
 }
 
+- (void)handlePingNotificationOnMainThread:(NSNotification *)notification
+{
+	[self performSelectorOnMainThread:@selector(handlePingNotification:) withObject:notification waitUntilDone:YES];
+}
+
 - (void)handlePingNotification:(NSNotification *)notification
 {	
 	NSString *host = [[[notification userInfo] objectForKey:@"host"] name];
 
 	if ([[notification name] isEqualToString:TXPingToolDidFinishNotification])
-	{
-		[self.currentPingTool release];
-		
+	{		
 		// Continue with the updates, because we were paused while waiting for the notification to finish
 		[self nextUpdate];
 	}
