@@ -21,6 +21,9 @@
 		43590880108D087D006ABCD5 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4359087D108D087D006ABCD5 /* icon2.png */; };
 		43590885108D08F1006ABCD5 /* menu_failure.png in Resources */ = {isa = PBXBuildFile; fileRef = 43590883108D08F1006ABCD5 /* menu_failure.png */; };
 		43590886108D08F1006ABCD5 /* menu_success.png in Resources */ = {isa = PBXBuildFile; fileRef = 43590884108D08F1006ABCD5 /* menu_success.png */; };
+		43BD7F9A118DAC2400E04E4C /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD7F97118DAC2300E04E4C /* NSString+Base64.m */; };
+		43BD7F9B118DAC2400E04E4C /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 43BD7F99118DAC2400E04E4C /* base64.c */; };
+		43BD7F9E118DAC3C00E04E4C /* HudsonAPIQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */; };
 		8B9BD3631178D37700E2C781 /* CPingTool_Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD35C1178D37700E2C781 /* CPingTool_Private.m */; };
 		8B9BD3641178D37700E2C781 /* CPingTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD35E1178D37700E2C781 /* CPingTool.m */; };
 		8B9BD3651178D37700E2C781 /* NSDate_SysTimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD3601178D37700E2C781 /* NSDate_SysTimeExtensions.m */; };
@@ -70,6 +73,12 @@
 		4359087D108D087D006ABCD5 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon2.png; path = Resources/icon2.png; sourceTree = "<group>"; };
 		43590883108D08F1006ABCD5 /* menu_failure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_failure.png; path = Resources/menu_failure.png; sourceTree = "<group>"; };
 		43590884108D08F1006ABCD5 /* menu_success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_success.png; path = Resources/menu_success.png; sourceTree = "<group>"; };
+		43BD7F96118DAC2300E04E4C /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
+		43BD7F97118DAC2300E04E4C /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
+		43BD7F98118DAC2400E04E4C /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
+		43BD7F99118DAC2400E04E4C /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
+		43BD7F9C118DAC3C00E04E4C /* HudsonAPIQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudsonAPIQuery.h; sourceTree = "<group>"; };
+		43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonAPIQuery.m; sourceTree = "<group>"; };
 		8B9BD35B1178D37700E2C781 /* CPingTool_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPingTool_Private.h; path = Classes/PingTool/CPingTool_Private.h; sourceTree = "<group>"; };
 		8B9BD35C1178D37700E2C781 /* CPingTool_Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPingTool_Private.m; path = Classes/PingTool/CPingTool_Private.m; sourceTree = "<group>"; };
 		8B9BD35D1178D37700E2C781 /* CPingTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPingTool.h; path = Classes/PingTool/CPingTool.h; sourceTree = "<group>"; };
@@ -100,6 +109,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				43BD7F95118DAC1500E04E4C /* Base64 */,
 				8B9BD35A1178D36100E2C781 /* PingTool */,
 				4359061F108BB9F0006ABCD5 /* SynthesizeSingleton.h */,
 				435905E6108BB6C8006ABCD5 /* HGrowl.h */,
@@ -110,6 +120,8 @@
 				43590652108BBC8D006ABCD5 /* MyController.m */,
 				435907F2108C4CD4006ABCD5 /* HudsonResult.h */,
 				435907F3108C4CD4006ABCD5 /* HudsonResult.m */,
+				43BD7F9C118DAC3C00E04E4C /* HudsonAPIQuery.h */,
+				43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -187,6 +199,17 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		43BD7F95118DAC1500E04E4C /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				43BD7F96118DAC2300E04E4C /* NSString+Base64.h */,
+				43BD7F97118DAC2300E04E4C /* NSString+Base64.m */,
+				43BD7F98118DAC2400E04E4C /* base64.h */,
+				43BD7F99118DAC2400E04E4C /* base64.c */,
+			);
+			name = Base64;
 			sourceTree = "<group>";
 		};
 		8B9BD35A1178D36100E2C781 /* PingTool */ = {
@@ -276,6 +299,9 @@
 				8B9BD3641178D37700E2C781 /* CPingTool.m in Sources */,
 				8B9BD3651178D37700E2C781 /* NSDate_SysTimeExtensions.m in Sources */,
 				8B9BD3661178D37700E2C781 /* NSHost_PingToolExtensions.m in Sources */,
+				43BD7F9A118DAC2400E04E4C /* NSString+Base64.m in Sources */,
+				43BD7F9B118DAC2400E04E4C /* base64.c in Sources */,
+				43BD7F9E118DAC3C00E04E4C /* HudsonAPIQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

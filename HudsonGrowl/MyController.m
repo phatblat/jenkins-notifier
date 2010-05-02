@@ -15,7 +15,9 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "MyController.h"
+
 #import "HGrowl.h"
+#import "HudsonAPIQuery.h"
 #import "HudsonResult.h"
 #import <SystemConfiguration/SystemConfiguration.h>	
 #import "CPingTool.h"
@@ -306,6 +308,74 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	[self updateStatus:resultsByJob];
 }
 
+- (void) parseAPI:(NSString*)hudsonInstall {
+	// make sure we arent getting a cached response from Cocoa
+	[[NSURLCache sharedURLCache] removeAllCachedResponses];
+	
+	// try to find user / pass in hudsonInstall string
+	NSString* user = nil;
+	NSString* pass = nil;
+	NSRange rangeOfLogin = [hudsonInstall rangeOfString:@"@"];
+	if (rangeOfLogin.location != NSNotFound) {
+		rangeOfLogin.location++;
+		rangeOfLogin.length = [hudsonInstall length]-rangeOfLogin.location;
+		
+		NSString* login = [hudsonInstall substringWithRange:rangeOfLogin];
+		hudsonInstall = [hudsonInstall substringToIndex:rangeOfLogin.location-1];
+		
+		NSRange rangeOfSeparator = [login rangeOfString:@":"];
+		user = [login substringToIndex:rangeOfSeparator.location];
+		pass = [login substringFromIndex:rangeOfSeparator.location+rangeOfSeparator.length];
+	}
+	
+	// call the Hudson Remote API
+	NSString* apiCall = [NSString stringWithFormat:@"%@/api/xml?depth=2&xpath=/*/job/lastBuild&wrapper=hudson", hudsonInstall];
+	NSString* xml = [HudsonAPIQuery synchronousQuery:apiCall user:user password:pass];
+	
+	// load the URL into an NSXMLDocument and get the root element	
+	NSXMLDocument* DOM = [[NSXMLDocument alloc] initWithXMLString:xml options:NSXMLNodeOptionsNone error:nil];
+	NSXMLElement* root = [DOM rootElement];
+	
+	NSMutableDictionary* resultsByJob = [NSMutableDictionary dictionaryWithCapacity:10];
+	
+	// iterate through all entries
+	NSArray* nodes = [root nodesForXPath:@"lastBuild" error:nil];
+	
+	for (NSXMLElement* entry in nodes) {
+		
+		NSString* buildName = [[[entry elementsForName:@"fullDisplayName"] objectAtIndex:0] stringValue];
+		NSRange rangeOfBuildNumberHash = [buildName rangeOfString:@"#" options:NSBackwardsSearch];
+		NSRange rangeOfJobName;
+		rangeOfJobName.location = 0;
+		rangeOfJobName.length = rangeOfBuildNumberHash.location;
+		
+		NSString* job = [[buildName substringWithRange:rangeOfJobName] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+		NSInteger buildNr = [[[[entry elementsForName:@"number"] objectAtIndex:0] stringValue] intValue];
+		NSString* result = [[[entry elementsForName:@"result"] objectAtIndex:0] stringValue];
+		NSString* link = [[[[entry elementsForName:@"url"] objectAtIndex:0] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		
+		BOOL isOnWhitelist = ([self.whitelist count] == 0 || [self job:job containsSubstringFromList:self.whitelist]);
+		BOOL isOnBlacklist = ([self.blacklist count] > 0 && [self job:job containsSubstringFromList:self.blacklist]);
+		
+		if (isOnWhitelist && !isOnBlacklist) {
+			BOOL success = [result isEqual:@"SUCCESS"];
+			
+			// only update in case job is unknown or build number is more recent
+			// than what's currently stored
+			if ([resultsByJob objectForKey:job] == nil
+				|| [[resultsByJob objectForKey:job] buildNr] < buildNr) {
+				
+				HudsonResult* result = [HudsonResult resultWithJob:job buildNr:buildNr success:success link:link];
+				[resultsByJob setObject:result forKey:job];
+			}
+		}
+	}
+	
+	[DOM release];
+	
+	[self updateStatus:resultsByJob];
+}
+
 - (void) updateStatus:(NSDictionary*)results {
 	HGrowl* growl = [HGrowl instance];
 		
@@ -513,8 +583,12 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 		
 		// Parse the RSS feed
 		NSString *feed = [feeds objectAtIndex:(self.numConnectableHosts + self.numUnconnectableHosts)];
-		NSURL *feedURL = [NSURL URLWithString:feed];
-		[self parseRSS:feedURL];
+		if ([feed hasSuffix:@"/rssAll"]) {
+			NSURL *feedURL = [NSURL URLWithString:feed];
+			[self parseRSS:feedURL];
+		} else {
+			[self parseAPI:feed];
+		}
 		
 		self.numConnectableHosts++;
 	}

@@ -1,8 +1,10 @@
 //
-//  main.m
+//  NSString+Base64.h
 //  HudsonGrowl
 //
-//  Created by Benjamin Broll on 18.10.09.
+//  Created by Benjamin Broll on 02.05.10.
+//	The code was created based on
+//  http://www.davidpires.com/blog/archives/basic-http-authentication-using-cocoa
 //
 //  This source code is licensed under the terms of the BSD license.
 //
@@ -16,7 +18,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-int main(int argc, char *argv[])
-{
-    return NSApplicationMain(argc,  (const char **) argv);
-}
+
+@interface NSString (Base64)
+
+- (NSString*) base64Encoding;
+
+@end
