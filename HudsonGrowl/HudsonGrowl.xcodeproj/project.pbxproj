@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */; };
+		433C0237118DC08E00A776D5 /* Gear.icns in Resources */ = {isa = PBXBuildFile; fileRef = 433C0236118DC08E00A776D5 /* Gear.icns */; };
 		43590588108BB5CD006ABCD5 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43590587108BB5CD006ABCD5 /* Growl.framework */; };
 		435905C6108BB664006ABCD5 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43590587108BB5CD006ABCD5 /* Growl.framework */; };
 		435905E8108BB6C8006ABCD5 /* HGrowl.m in Sources */ = {isa = PBXBuildFile; fileRef = 435905E7108BB6C8006ABCD5 /* HGrowl.m */; };
@@ -58,6 +59,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		433C0236118DC08E00A776D5 /* Gear.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Gear.icns; path = Resources/Gear.icns; sourceTree = "<group>"; };
 		43590587108BB5CD006ABCD5 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		435905E6108BB6C8006ABCD5 /* HGrowl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGrowl.h; sourceTree = "<group>"; };
 		435905E7108BB6C8006ABCD5 /* HGrowl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HGrowl.m; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				4359087B108D087D006ABCD5 /* icon2_failure.png */,
 				4359087C108D087D006ABCD5 /* icon2_success.png */,
 				4359087D108D087D006ABCD5 /* icon2.png */,
+				433C0236118DC08E00A776D5 /* Gear.icns */,
 				43590871108D0607006ABCD5 /* Cancel Red Button.png */,
 				43590872108D0607006ABCD5 /* Clear Green Button.png */,
 				8D1107310486CEB800E47090 /* HudsonGrowl-Info.plist */,
@@ -280,6 +283,7 @@
 				43590880108D087D006ABCD5 /* icon2.png in Resources */,
 				43590885108D08F1006ABCD5 /* menu_failure.png in Resources */,
 				43590886108D08F1006ABCD5 /* menu_success.png in Resources */,
+				433C0237118DC08E00A776D5 /* Gear.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
