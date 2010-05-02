@@ -35,7 +35,7 @@
 	NSRunLoop *theRL = [NSRunLoop currentRunLoop];
 	while (!q->connectionDidFinishLoading && [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]);
 	
-	NSString* xml = [[[NSString alloc] initWithData:q->responseData encoding:NSUTF8StringEncoding] autorelease];
+	NSString* xml = [q->responseText retain];
 	[q release];
 	
 	return xml;
@@ -58,6 +58,7 @@
 }
 
 - (void) dealloc {
+	[responseText release];
 	[responseData release];
 	[error release];
 	[connection release];
@@ -81,10 +82,10 @@
 	NSString* format = [NSString stringWithFormat:@"%@:%@", username, password];
 	NSString* auth = [NSString stringWithFormat:@"Basic %@", [format base64Encoding]];
 	[req addValue:auth forHTTPHeaderField:@"Authorization"];
+	[req setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
 	
 	// open the connection
 	connection = [[NSURLConnection alloc] initWithRequest:req delegate:self];
-	NSLog(@"starting connection");
 	[connection start];	
 }
 
@@ -137,16 +138,28 @@
 	}
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)conn {
+- (void)connectionDidFinishLoading:(NSURLConnection *)conn {	
 	connectionDidFinishLoading = YES;
+	
+	// convert data
 	NSString* xml = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease];
-	[delegate query:self completedWithXML:xml];
+	// try a fall-back encoding
+	if (xml == nil) xml = [[[NSString alloc] initWithData:responseData encoding:NSWindowsCP1252StringEncoding] autorelease];
+
+	if (delegate != nil) {
+		[delegate query:self completedWithXML:xml];
+	} else {
+		responseText = [xml retain];
+	}
 }
 
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)e {	
 	connectionDidFinishLoading = YES;
-	error = [e retain];
-	[delegate query:self didFailWithError:error];	
+	if (delegate != nil) {
+		[delegate query:self didFailWithError:error];
+	} else {
+		error = [e retain];
+	}
 }
 
 

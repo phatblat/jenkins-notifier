@@ -39,6 +39,7 @@
 	NSURLConnection* connection;
 	NSError* error;
 	NSMutableData* responseData;
+	NSString* responseText;
 	
 	BOOL connectionDidFinishLoading;
 	
