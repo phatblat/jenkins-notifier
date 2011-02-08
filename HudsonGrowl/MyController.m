@@ -16,11 +16,13 @@
 
 #import "MyController.h"
 
+#import <SystemConfiguration/SystemConfiguration.h>	
+
 #import "HGrowl.h"
 #import "HudsonAPIQuery.h"
+#import "HudsonJob.h"
 #import "HudsonResult.h"
-#import <SystemConfiguration/SystemConfiguration.h>	
-#import "CPingTool.h"
+#import "HudsonServer.h"
 
 NSString *MyControllerFeedsKey = @"MyControllerFeedsKey";
 NSString *MyControllerWhitelistKey = @"MyControllerWhitelistKey";
@@ -32,12 +34,21 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 
 @interface MyController ()
 
-- (void) parseRSS:(NSURL *)feedURL;
+- (void) insertEmptyMenuItem;
+
+- (NSString*) commaSeparatedListFromStringArray:(NSArray*)a;
+- (NSArray*) stringArrayFromCommaSeparatedList:(NSString*)s;
+
+- (void) parseRSS:(NSString *)feedURL;
 - (void) openBrowserForResult:(HudsonResult*)result;
-- (void) updateStatus:(NSDictionary*)results;
-- (void) handlePingNotification:(NSNotification *)notification;
-- (void) handlePingNotificationOnMainThread:(NSNotification *)notification;
+- (void) updateStatus:(HudsonServer*)server;
+
 - (void) startUpdates:(NSTimer *)theTimer;
+- (void) nextUpdate;
+- (BOOL)pingFeedServer:(NSString *)feed;
+- (void)pingFinished;
+//- (void) handlePingNotification:(NSNotification *)notification;
+//- (void) handlePingNotificationOnMainThread:(NSNotification *)notification;
 
 @property (nonatomic, readwrite, retain) NSArray *feeds;
 @property (nonatomic, readwrite, retain) NSArray *whitelist;
@@ -51,60 +62,22 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 @property (nonatomic, readwrite, assign) BOOL shouldUseContinuousNotifications;
 @property (nonatomic, readwrite, retain) NSTimer *updateTimer;
 @property (nonatomic, readwrite, assign) NSTimeInterval pollIntervalInMinutes;
-@property (nonatomic, readwrite, retain) CPingTool *currentPingTool;
+@property (nonatomic, readwrite, retain) SimplePing *currentPingTool;
 
 @end
 
+#pragma mark -
 
 @implementation MyController
+
+#pragma mark Properties
 
 @synthesize preferences, theMenu, feedsTextField, whitelistTextField, blacklistTextField, feeds, whitelist, blacklist, theItem, numDefaultMenuItems;
 @synthesize lastResultsByJob, menuItemsByJob, stickyNotificationCheckbox, shouldUseStickyNotifications, continuousNotificationCheckbox, shouldUseContinuousNotifications;
 @synthesize numConnectableHosts, numUnconnectableHosts, updateTimer, pollIntervalInMinutes, currentPingTool;
 
-- (NSString *)commaSeparatedListFromStringArray:(NSArray *)stringArray
-{
-	NSString *commaSeparatedList = @"";
-	
-	for (NSString *string in stringArray)
-	{
-		if ([commaSeparatedList length] > 0)
-		{
-			commaSeparatedList = [NSString stringWithFormat:@"%@, ", commaSeparatedList];
-		}
-		commaSeparatedList = [NSString stringWithFormat:@"%@%@", commaSeparatedList, string];
-	}
-	
-	return commaSeparatedList;
-}
 
-- (NSArray *)stringArrayFromCommaSeparatedList:(NSString *)list
-{
-	NSScanner *scanner = [NSScanner scannerWithString:list];
-	NSString *sep = @",";
-	NSString *element;
-	NSMutableArray *stringArray = [[[NSMutableArray alloc] init] autorelease];
-	
-	// Keep reading from the list until we're done
-	while ( [scanner scanUpToString:sep intoString:&element] )
-	{
-		[scanner scanString:sep intoString:NULL];
-		element = [element stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		[stringArray addObject:[[element copy] autorelease]];
-	}
-	
-	return stringArray;
-}
-
-- (NSMenuItem *)insertEmptyMenuItem
-{
-	NSMenuItem *emptyMenuItem = [theMenu insertItemWithTitle:@"Waiting For Result ..."
-												  action:nil
-										   keyEquivalent:@""
-												 atIndex:0];
-	[emptyMenuItem setEnabled:NO];
-	return emptyMenuItem;
-}
+#pragma mark Application Delegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application 
@@ -139,10 +112,10 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	self.pollIntervalInMinutes = pollIntervalInMinutesHasValue ? [[NSUserDefaults standardUserDefaults] floatForKey:MyControllerPollIntervalInMinutesKey] : 1.0f; // default to 1 minute
 			
 	// Start looking for valid servers
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidReceivePacketNotification object:nil];
+	/*[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidReceivePacketNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidLosePacketNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidFailNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidFinishNotification object:nil];*/
 
 	
 	self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:self.pollIntervalInMinutes * 60.0f
@@ -152,6 +125,21 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 													   repeats:YES];
 	[self startUpdates:self.updateTimer];
 }
+
+
+#pragma mark Menu Management
+
+- (void)insertEmptyMenuItem
+{
+	NSMenuItem *emptyMenuItem = [theMenu insertItemWithTitle:@"Waiting For Result ..."
+                                                      action:nil
+                                               keyEquivalent:@""
+                                                     atIndex:0];
+	[emptyMenuItem setEnabled:NO];
+}
+
+
+#pragma mark Click Actions
 
 - (void) growlNotificationWasClicked:(id)clickContext {
 	NSString* job = (NSString*) clickContext;
@@ -230,37 +218,63 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	[self startUpdates:self.updateTimer];	
 }
 
+
+#pragma mark Helpers
+
 - (void) openBrowserForResult:(HudsonResult*)result {
 	NSURL* url = [NSURL URLWithString:result.link];
 	if (url != nil) [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
-- (BOOL)job:(NSString *)job containsSubstringFromList:(NSArray *)list
+- (NSString *)commaSeparatedListFromStringArray:(NSArray *)stringArray
 {
-	BOOL wasSubstringFound = NO;
+	NSString *commaSeparatedList = @"";
 	
-	for (NSString *substring in list)
+	for (NSString *string in stringArray)
 	{
-		if ([substring length] > 0)
+		if ([commaSeparatedList length] > 0)
 		{
-			NSRange range = [job rangeOfString:substring];
-			if (range.location != NSNotFound)
-			{
-				wasSubstringFound = YES;
-				break;
-			}
+			commaSeparatedList = [NSString stringWithFormat:@"%@, ", commaSeparatedList];
 		}
+		commaSeparatedList = [NSString stringWithFormat:@"%@%@", commaSeparatedList, string];
 	}
 	
-	return wasSubstringFound;
+	return commaSeparatedList;
 }
 
-- (void) parseRSS:(NSURL *)feedURL {
+- (NSArray *)stringArrayFromCommaSeparatedList:(NSString *)list
+{
+	NSScanner *scanner = [NSScanner scannerWithString:list];
+	NSString *sep = @",";
+	NSString *element;
+	NSMutableArray *stringArray = [[[NSMutableArray alloc] init] autorelease];
+	
+	// Keep reading from the list until we're done
+	while ( [scanner scanUpToString:sep intoString:&element] )
+	{
+		[scanner scanString:sep intoString:NULL];
+		element = [element stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		[stringArray addObject:[[element copy] autorelease]];
+	}
+	
+	return stringArray;
+}
+
+
+#pragma mark Hudson Data Retrieval
+
+- (void) parseRSS:(NSString *)feed {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    HudsonServer* server = [HudsonServer serverWithLegacyConnectionString:feed];
+    server.whitelist = self.whitelist;
+    server.blacklist = self.blacklist;
+    
 	// make sure we arent getting a cached response from Cocoa
 	[[NSURLCache sharedURLCache] removeAllCachedResponses];
-	NSMutableDictionary* resultsByJob = [NSMutableDictionary dictionaryWithCapacity:1];
+	
 	// load the URL into an NSXMLDocument and get the root element	
-	NSXMLDocument* DOM = [[NSXMLDocument alloc] initWithContentsOfURL:feedURL options:NSXMLNodeOptionsNone error:nil];
+	NSXMLDocument* DOM = [[NSXMLDocument alloc] initWithContentsOfURL:server.url options:NSXMLNodeOptionsNone error:nil];
 	NSXMLElement* root = [DOM rootElement];
 	
 	// iterate through all entries
@@ -274,116 +288,100 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 		NSScanner* scanner = [NSScanner scannerWithString:title];
 		NSString* sep = @"#";
 		
-		NSString* job;
+		NSString* jobName;
 		NSInteger buildNr;
 		NSString* result;
 		
-		BOOL hasJob = [scanner scanUpToString:sep intoString:&job];
+		BOOL hasJob = [scanner scanUpToString:sep intoString:&jobName];
 		
-		// Only save the result if the job name is 1) on the whitelist and not on the blacklist, 2) there is no whitelist, and it is not on the blacklist		
 		[scanner scanString:sep intoString:NULL];
 		BOOL hasNr = [scanner scanInteger:&buildNr];
 		BOOL hasResult = [scanner scanUpToString:@"" intoString:&result];
 		
-		BOOL isOnWhitelist = [self.whitelist count] == 0 || [self job:job containsSubstringFromList:self.whitelist];
-		BOOL isOnBlacklist = [self.blacklist count] > 0 && [self job:job containsSubstringFromList:self.blacklist];
-		
-		if (hasJob && hasNr && hasResult && isOnWhitelist && !isOnBlacklist) {
-			job = [job stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+		if (hasJob && hasNr && hasResult) {
+			jobName = [jobName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 			BOOL success = [result isEqual:@"(SUCCESS)"];
-			
-			// only update in case job is unknown or build number is more recent
-			// than what's currently stored
-			if ([resultsByJob objectForKey:job] == nil
-				|| [[resultsByJob objectForKey:job] buildNr] < buildNr) {
-			
-				HudsonResult* result = [HudsonResult resultWithJob:job buildNr:buildNr success:success link:link];
-				[resultsByJob setObject:result forKey:job];
-			}
+            
+            HudsonJob* job = [HudsonJob jobWithName:jobName];            
+            job.lastResult = [HudsonResult resultWithBuildNr:buildNr success:success link:link];
+            [server.jobs addObject:job];
 		}
 	}
 	
 	[DOM release];
 	
-	[self updateStatus:resultsByJob];
+	//[self updateStatus:server];
+    [self performSelectorOnMainThread:@selector(updateStatus:) withObject:server waitUntilDone:YES];
+    
+    [pool release];
 }
 
 - (void) parseAPI:(NSString*)hudsonInstall {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    HudsonServer* server = [HudsonServer serverWithLegacyConnectionString:hudsonInstall];
+    server.whitelist = self.whitelist;
+    server.blacklist = self.blacklist;
+    
 	// make sure we arent getting a cached response from Cocoa
 	[[NSURLCache sharedURLCache] removeAllCachedResponses];
 	
-	// try to find user / pass in hudsonInstall string
-	NSString* user = nil;
-	NSString* pass = nil;
-	NSRange rangeOfLogin = [hudsonInstall rangeOfString:@"@"];
-	if (rangeOfLogin.location != NSNotFound) {
-		rangeOfLogin.location++;
-		rangeOfLogin.length = [hudsonInstall length]-rangeOfLogin.location;
-		
-		NSString* login = [hudsonInstall substringWithRange:rangeOfLogin];
-		hudsonInstall = [hudsonInstall substringToIndex:rangeOfLogin.location-1];
-		
-		NSRange rangeOfSeparator = [login rangeOfString:@":"];
-		user = [login substringToIndex:rangeOfSeparator.location];
-		pass = [login substringFromIndex:rangeOfSeparator.location+rangeOfSeparator.length];
-	}
-	
 	// call the Hudson Remote API
-	NSString* apiCall = [NSString stringWithFormat:@"%@/api/xml?depth=2&xpath=/*/job/lastBuild&wrapper=hudson", hudsonInstall];
-	NSString* xml = [HudsonAPIQuery synchronousQuery:apiCall user:user password:pass];
+    NSDate *startedAt = [NSDate date];
+	NSString* xml = [HudsonAPIQuery synchronousQuery:[server apiCall] user:server.username password:server.password];
+    
+	// load the URL into an NSXMLDocument and get the root element
+    NSError *error = nil;
+	NSXMLDocument* DOM = [[NSXMLDocument alloc] initWithXMLString:xml options:NSXMLNodeOptionsNone error:&error];
+    if (error != nil) {
+        NSLog(@"error parsing feed from %@. error: %@", [server.url host], error);
+    } else {
+        // iterate through all entries
+        NSXMLElement* root = [DOM rootElement];
+        NSArray* nodes = [root nodesForXPath:@"lastBuild" error:nil];
+        
+        for (NSXMLElement* entry in nodes) {
+            
+            NSString* buildName = [[[entry elementsForName:@"fullDisplayName"] objectAtIndex:0] stringValue];
+            NSRange rangeOfBuildNumberHash = [buildName rangeOfString:@"#" options:NSBackwardsSearch];
+            NSRange rangeOfJobName;
+            rangeOfJobName.location = 0;
+            rangeOfJobName.length = rangeOfBuildNumberHash.location;
+            
+            NSString* jobName = [[buildName substringWithRange:rangeOfJobName] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            NSInteger buildNr = [[[[entry elementsForName:@"number"] objectAtIndex:0] stringValue] intValue];
+            NSString* result = [[[entry elementsForName:@"result"] objectAtIndex:0] stringValue];
+            NSString* link = [[[[entry elementsForName:@"url"] objectAtIndex:0] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            BOOL success = [result isEqual:@"SUCCESS"];
+                
+            HudsonJob* job = [HudsonJob jobWithName:jobName];
+            job.lastResult = [HudsonResult resultWithBuildNr:buildNr success:success link:link];
+            [server.jobs addObject:job];
+        }
+    }
+    
+    [DOM release];
+    
+    NSTimeInterval taken = -[startedAt timeIntervalSinceNow];
+    NSLog(@"time taken parsing feed from %@: %f secs", [server.url host], taken);
 	
-	// load the URL into an NSXMLDocument and get the root element	
-	NSXMLDocument* DOM = [[NSXMLDocument alloc] initWithXMLString:xml options:NSXMLNodeOptionsNone error:nil];
-	NSXMLElement* root = [DOM rootElement];
-	
-	NSMutableDictionary* resultsByJob = [NSMutableDictionary dictionaryWithCapacity:10];
-	
-	// iterate through all entries
-	NSArray* nodes = [root nodesForXPath:@"lastBuild" error:nil];
-	
-	for (NSXMLElement* entry in nodes) {
-		
-		NSString* buildName = [[[entry elementsForName:@"fullDisplayName"] objectAtIndex:0] stringValue];
-		NSRange rangeOfBuildNumberHash = [buildName rangeOfString:@"#" options:NSBackwardsSearch];
-		NSRange rangeOfJobName;
-		rangeOfJobName.location = 0;
-		rangeOfJobName.length = rangeOfBuildNumberHash.location;
-		
-		NSString* job = [[buildName substringWithRange:rangeOfJobName] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-		NSInteger buildNr = [[[[entry elementsForName:@"number"] objectAtIndex:0] stringValue] intValue];
-		NSString* result = [[[entry elementsForName:@"result"] objectAtIndex:0] stringValue];
-		NSString* link = [[[[entry elementsForName:@"url"] objectAtIndex:0] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		
-		BOOL isOnWhitelist = ([self.whitelist count] == 0 || [self job:job containsSubstringFromList:self.whitelist]);
-		BOOL isOnBlacklist = ([self.blacklist count] > 0 && [self job:job containsSubstringFromList:self.blacklist]);
-		
-		if (isOnWhitelist && !isOnBlacklist) {
-			BOOL success = [result isEqual:@"SUCCESS"];
-			
-			// only update in case job is unknown or build number is more recent
-			// than what's currently stored
-			if ([resultsByJob objectForKey:job] == nil
-				|| [[resultsByJob objectForKey:job] buildNr] < buildNr) {
-				
-				HudsonResult* result = [HudsonResult resultWithJob:job buildNr:buildNr success:success link:link];
-				[resultsByJob setObject:result forKey:job];
-			}
-		}
-	}
-	
-	[DOM release];
-	
-	[self updateStatus:resultsByJob];
+	//[self updateStatus:server];
+    [self performSelectorOnMainThread:@selector(updateStatus:) withObject:server waitUntilDone:YES];
+    
+    [pool release];
 }
 
-- (void) updateStatus:(NSDictionary*)results {
+
+#pragma mark Status Management
+
+- (void) updateStatus:(HudsonServer*)server {
 	HGrowl* growl = [HGrowl instance];
-		
+    
 	// update new build results
-	for (NSString *job in results) {
-		HudsonResult *result = [results objectForKey:job];
-		HudsonResult* lastResult = [lastResultsByJob objectForKey:job];
-		NSMenuItem* indicator = [menuItemsByJob objectForKey:job];
+	for (HudsonJob* job in [server filteredJobs]) {
+		HudsonResult* result = job.lastResult;
+		HudsonResult* lastResult = [lastResultsByJob objectForKey:job.name];
+		NSMenuItem* indicator = [menuItemsByJob objectForKey:job.name];
 		
 		if (lastResult == nil || result.buildNr > lastResult.buildNr) {
 			if (indicator == nil) {
@@ -392,16 +390,14 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 					indicator = [theMenu itemAtIndex:0];
 					[indicator setEnabled:YES];
 					[indicator setAction:@selector(clickOpenBuild:)];
-				} 
-				else 
-				{
+				} else {
 					NSArray *menuItems = [theMenu itemArray];
 					NSEnumerator *menuIterator = [menuItems objectEnumerator];
 					NSMenuItem *menuItem;
 					
 					// Search through menu items and insert alphabetically
 					while ( (menuItem = [menuIterator nextObject]) && ![menuItem isSeparatorItem]) {
-						if ( [job localizedCaseInsensitiveCompare:[menuItem title]] != NSOrderedDescending )
+						if ( [job.name localizedCaseInsensitiveCompare:[menuItem title]] != NSOrderedDescending )
 							break;
 					}
 				
@@ -410,45 +406,40 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 											   keyEquivalent:@""
 													 atIndex:[theMenu indexOfItem:menuItem]];
 				}
-				[menuItemsByJob setObject:indicator forKey:job];
+				[menuItemsByJob setObject:indicator forKey:job.name];
 			}
 			
 			if (result.success) {
 				[indicator setImage:[NSImage imageNamed:@"menu_success.png"]];
-				[indicator setTitle:[NSString stringWithFormat:@"%@ #%d", job, result.buildNr]];
+				[indicator setTitle:[NSString stringWithFormat:@"%@ #%d", job.name, result.buildNr]];
 				[indicator setEnabled:YES];
 			
 				// Depending on settings: Only post the notification if different than last time OR post on all builds
-				if (lastResult == nil || (self.shouldUseContinuousNotifications && result.success == lastResult.success))
-				{
+				if (lastResult == nil || (self.shouldUseContinuousNotifications && result.success == lastResult.success)) {
 					[growl postNotificationWithName:GrowlHudsonSuccess
-												job:job
-											  title:job
+												job:job.name
+											  title:job.name
 										description:[NSString stringWithFormat:@"Build successful (%d)", result.buildNr]
 											  image:[NSImage imageNamed:@"Clear Green Button.png"]
 										   isSticky:NO];
 
-				}
-				else if (result.success != lastResult.success)
-				{
+				} else if (result.success != lastResult.success) {
 					[growl postNotificationWithName:GrowlHudsonSuccess
-												job:job
-											  title:job
+												job:job.name
+											  title:job.name
 										description:[NSString stringWithFormat:@"Build has been restored (%d)", result.buildNr]
 											  image:[NSImage imageNamed:@"Clear Green Button.png"]
 										   isSticky:(lastResult != nil && self.shouldUseStickyNotifications)];
 				}
-				
 			} else {
 				[indicator setImage:[NSImage imageNamed:@"menu_failure.png"]];
-				[indicator setTitle:[NSString stringWithFormat:@"%@ #%d", job, result.buildNr]];
+				[indicator setTitle:[NSString stringWithFormat:@"%@ #%d", job.name, result.buildNr]];
 				[indicator setEnabled:YES];
 
-				if (lastResult == nil || self.shouldUseContinuousNotifications || (result.success != lastResult.success))
-				{
+				if (lastResult == nil || self.shouldUseContinuousNotifications || (result.success != lastResult.success)) {
 					[growl postNotificationWithName:GrowlHudsonFailure
-												job:job
-											  title:job
+												job:job.name
+											  title:job.name
 										description:[NSString stringWithFormat:@"Build failed (%d)", result.buildNr]
 											  image:[NSImage imageNamed:@"Cancel Red Button.png"]
 										   isSticky:(lastResult != nil && (result.success != lastResult.success && self.shouldUseStickyNotifications))];
@@ -457,7 +448,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 			
 			
 			// Replace at the end, so we don't end up accessing a non-existent object
-			[lastResultsByJob setObject:result forKey:job];
+			[lastResultsByJob setObject:result forKey:job.name];
 		}
 	}
 	
@@ -480,48 +471,17 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	}
 }
 
-- (BOOL)isHostReachable:(NSString *)hostname
-{	
-	Boolean isHostReachable = false;
-	
-	if ([hostname length] > 0)
-	{
-		const char *hostNameC = [hostname cStringUsingEncoding:NSASCIIStringEncoding];
-		SCNetworkReachabilityRef target;
-		SCNetworkConnectionFlags flags = 0;
-		target = SCNetworkReachabilityCreateWithName(NULL, hostNameC);
-		isHostReachable = SCNetworkReachabilityGetFlags(target, &flags);
-		CFRelease(target);
-	}
-		
-	return isHostReachable ? YES : NO;
-}
 
-- (BOOL)pingFeedServer:(NSString *)feed
+#pragma mark Connectivity Management
+
+- (void)startUpdates:(NSTimer *)theTimer
 {
-	NSLog(@"### attempting to connect to feed: %@", feed);
+	// reset everything, prepare for updates
+	self.numConnectableHosts = 0;
+	self.numUnconnectableHosts = 0;	
 	
-	BOOL initiatedPing = NO;
-	NSString *hostname = [[NSURL URLWithString:feed] host];
-	BOOL isHostReachable = [hostname length] > 0 && [self isHostReachable:hostname];
-
-	// Check if we have an outbound network connection (host is reachable) & and if there is an address mapping
-	if (isHostReachable)
-	{	
-		NSHost *host = [NSHost hostWithName:hostname];
-		if (host != nil)
-		{
-			// Next ping it to see if it responds
-			self.currentPingTool = [[[CPingTool alloc] init] autorelease];
-			[self.currentPingTool setHost:host];
-			[self.currentPingTool setTimeout:0.2f];
-			[self.currentPingTool setPingCount:1];
-			[self.currentPingTool ping];
-			initiatedPing = YES;
-		}
-	}
-	
-	return initiatedPing;
+	// kick off the updates
+	[self nextUpdate];
 }
 
 - (void)nextUpdate
@@ -553,14 +513,124 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	}
 }
 
-- (void)startUpdates:(NSTimer *)theTimer
-{
-	// reset everything, prepare for updates
-	self.numConnectableHosts = 0;
-	self.numUnconnectableHosts = 0;	
+- (BOOL)isHostReachable:(NSString *)hostname
+{	
+	Boolean isHostReachable = false;
 	
-	// kick off the updates
-	[self nextUpdate];
+	if ([hostname length] > 0)
+	{
+		const char *hostNameC = [hostname cStringUsingEncoding:NSASCIIStringEncoding];
+		SCNetworkReachabilityRef target;
+		SCNetworkConnectionFlags flags = 0;
+		target = SCNetworkReachabilityCreateWithName(NULL, hostNameC);
+		isHostReachable = SCNetworkReachabilityGetFlags(target, &flags);
+		CFRelease(target);
+	}
+		
+	return isHostReachable ? YES : NO;
+}
+
+
+// new Apple ping tool
+- (BOOL)pingFeedServer:(NSString *)feed {
+	BOOL initiatedPing = NO;
+	NSString *hostname = [[NSURL URLWithString:feed] host];
+	BOOL isHostReachable = [hostname length] > 0 && [self isHostReachable:hostname];
+    
+	NSLog(@"### attempting to connect to feed: %@", hostname);
+    
+	// Check if we have an outbound network connection (host is reachable) & and if there is an address mapping
+	if (isHostReachable)
+	{
+        // Next ping it to see if it responds
+        SimplePing *pinger = [SimplePing simplePingWithHostName:hostname];
+        pinger.delegate = self;
+        pinger.timeout = 1.0;
+        [pinger start];
+        
+        self.currentPingTool = pinger;
+        initiatedPing = YES;
+	} else {
+        NSLog(@"### host %@ not reachable", hostname);
+    }
+	
+	return initiatedPing;
+}
+
+- (void)simplePing:(SimplePing *)pinger didStartWithAddress:(NSData *)address {
+    // ask ping tool to send the ping
+    NSLog(@"### ping");
+    [pinger sendPingWithData:nil];
+}
+
+- (void)simplePing:(SimplePing *)pinger didFailWithError:(NSError *)error {
+    NSLog(@"### pingtool couldn't be started for host %@. error: %@", pinger.hostName, error);
+}
+
+- (void)simplePing:(SimplePing *)pinger didReceivePingResponsePacket:(NSData *)packet {
+    NSLog(@"### received response from host: %@", pinger.hostName);
+    
+    // Parse the RSS feed
+    NSString *feed = [feeds objectAtIndex:(self.numConnectableHosts + self.numUnconnectableHosts)];
+    if ([feed hasSuffix:@"/rssAll"]) {
+        //[self parseRSS:feed];
+        [self performSelectorInBackground:@selector(parseRSS:) withObject:feed];
+    } else {
+        //[self parseAPI:feed];
+        [self performSelectorInBackground:@selector(parseAPI:) withObject:feed];
+    }
+    
+    self.numConnectableHosts++;
+    [self pingFinished];
+}
+
+- (void)simplePing:(SimplePing *)pinger didFailToSendPacket:(NSData *)packet error:(NSError *)error {
+    NSLog(@"### pingtool bailed attempting to reach host: %@", pinger.hostName);
+    
+    // TODO: Gray out menu items associated with this host
+    self.numUnconnectableHosts++;		
+    [self pingFinished];
+}
+
+- (void)simplePingDidTimeoutWaitingForResponsePacket:(SimplePing *)pinger {
+    NSLog(@"### timeout while pinging host: %@", pinger.hostName);
+    
+    // TODO: Gray out menu items associated with this host
+    self.numUnconnectableHosts++;
+    [self pingFinished];
+}
+
+- (void)pingFinished {
+    [self nextUpdate];
+}
+
+
+// old ping tool
+/*- (BOOL)pingFeedServer:(NSString *)feed
+{
+	NSLog(@"### attempting to connect to feed: %@", feed);
+	
+	BOOL initiatedPing = NO;
+	NSString *hostname = [[NSURL URLWithString:feed] host];
+	BOOL isHostReachable = [hostname length] > 0 && [self isHostReachable:hostname];
+
+	// Check if we have an outbound network connection (host is reachable) & and if there is an address mapping
+	if (isHostReachable)
+	{	
+		NSHost *host = [NSHost hostWithName:hostname];
+		if (host != nil)
+		{
+			// Next ping it to see if it responds
+			self.currentPingTool = [[[CPingTool alloc] init] autorelease];
+			[self.currentPingTool setHost:host];
+			[self.currentPingTool setTimeout:0.2f];
+			[self.currentPingTool setPingCount:1];
+			[self.currentPingTool ping];
+			initiatedPing = YES;
+		}
+	}
+	
+	return initiatedPing;
 }
 
 - (void)handlePingNotificationOnMainThread:(NSNotification *)notification
@@ -584,8 +654,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 		// Parse the RSS feed
 		NSString *feed = [feeds objectAtIndex:(self.numConnectableHosts + self.numUnconnectableHosts)];
 		if ([feed hasSuffix:@"/rssAll"]) {
-			NSURL *feedURL = [NSURL URLWithString:feed];
-			[self parseRSS:feedURL];
+			[self parseRSS:feed];
 		} else {
 			[self parseAPI:feed];
 		}
@@ -608,7 +677,10 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 		// TODO: Gray out menu items associated with this host
 		self.numUnconnectableHosts++;		
 	} 	
-}
+}*/
+
+
+#pragma mark Dealloc
 
 - (void) dealloc {
 	[lastResultsByJob release]; lastResultsByJob = nil;

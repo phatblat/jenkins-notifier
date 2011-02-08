@@ -19,16 +19,15 @@
 
 @implementation HudsonResult
 
-@synthesize job, buildNr, success, link;
+@synthesize buildNr, success, link;
 
 
-+(HudsonResult*)resultWithJob:(NSString*)job buildNr:(int)nr success:(BOOL)success link:(NSString*)link {
-	return [[[self alloc] initWithJob:job buildNr:nr success:success link:link] autorelease];
++(HudsonResult*)resultWithBuildNr:(NSInteger)nr success:(BOOL)success link:(NSString*)link {
+	return [[[self alloc] initWithBuildNr:nr success:success link:link] autorelease];
 }
 
--(id)initWithJob:(NSString*)j buildNr:(int)nr success:(BOOL)s link:(NSString*)l {
+-(id)initWithBuildNr:(NSInteger)nr success:(BOOL)s link:(NSString*)l {
 	if ((self = [super init])) {
-		job = [j retain];
 		buildNr = nr;
 		success = s;
 		link = [l retain];
@@ -39,12 +38,11 @@
 
 
 - (NSString*) description {
-	return [NSString stringWithFormat:@"job: %@, buildNr: %d, success: %d, link: '%@'", job, buildNr, success, link];
+	return [NSString stringWithFormat:@"buildNr: %d, success: %d, link: '%@'", buildNr, success, link];
 }
 
 
 - (void) dealloc {
-	[job release];
 	[link release];
 	
 	[super dealloc];

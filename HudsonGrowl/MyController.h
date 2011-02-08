@@ -16,31 +16,44 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class HudsonResult, CPingTool;
+#import "SimplePing.h"
 
-@interface MyController : NSObject {
+
+@interface MyController : NSObject <SimplePingDelegate> {
 	
-	NSWindow* preferences;	
+    // View
+    // - Menu Bar
+	NSMenu* theMenu;
+	NSStatusItem* theItem;
+	NSUInteger numDefaultMenuItems;
+	NSMutableDictionary* menuItemsByJob;
+    // - Preferences
+	NSWindow* preferences;
 	NSTextField *feedsTextField;
 	NSTextField *whitelistTextField;
 	NSTextField *blacklistTextField;
+	NSButton *continuousNotificationCheckbox;
+	NSButton *stickyNotificationCheckbox;
+    
+    // Model
+    // - Settings
 	NSArray *feeds;
 	NSArray *whitelist;
 	NSArray *blacklist;
-	NSMenu* theMenu;
-	NSStatusItem* theItem;
-	NSTimer* updateTimer;
-	NSUInteger numDefaultMenuItems;	
-	NSMutableDictionary* lastResultsByJob;
-	NSMutableDictionary* menuItemsByJob;
-	NSButton *continuousNotificationCheckbox;
 	BOOL shouldUseContinuousNotifications;
-	NSButton *stickyNotificationCheckbox;
 	BOOL shouldUseStickyNotifications;
+	NSTimeInterval pollIntervalInMinutes;
+    // - Data
+	NSMutableDictionary* lastResultsByJob;
+    // - Host Information
 	NSUInteger numConnectableHosts;
 	NSUInteger numUnconnectableHosts;
-	NSTimeInterval pollIntervalInMinutes;
-	CPingTool *currentPingTool;
+    
+    // Controlling
+    // - Update Management
+	NSTimer* updateTimer;
+    // - Pinging
+	SimplePing *currentPingTool;
 }
 
 @property (assign) IBOutlet NSWindow* preferences;

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */; };
+		4317E1A21300C92B0073CEF9 /* NSString+ListContains.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1A11300C92B0073CEF9 /* NSString+ListContains.m */; };
+		4317E1A51300C9350073CEF9 /* HudsonServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1A41300C9350073CEF9 /* HudsonServer.m */; };
+		4317E1A81300C9470073CEF9 /* HudsonJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1A71300C9470073CEF9 /* HudsonJob.m */; };
 		433C0237118DC08E00A776D5 /* Gear.icns in Resources */ = {isa = PBXBuildFile; fileRef = 433C0236118DC08E00A776D5 /* Gear.icns */; };
 		43590588108BB5CD006ABCD5 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43590587108BB5CD006ABCD5 /* Growl.framework */; };
 		435905C6108BB664006ABCD5 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43590587108BB5CD006ABCD5 /* Growl.framework */; };
@@ -25,10 +28,7 @@
 		43BD7F9A118DAC2400E04E4C /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD7F97118DAC2300E04E4C /* NSString+Base64.m */; };
 		43BD7F9B118DAC2400E04E4C /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 43BD7F99118DAC2400E04E4C /* base64.c */; };
 		43BD7F9E118DAC3C00E04E4C /* HudsonAPIQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */; };
-		8B9BD3631178D37700E2C781 /* CPingTool_Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD35C1178D37700E2C781 /* CPingTool_Private.m */; };
-		8B9BD3641178D37700E2C781 /* CPingTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD35E1178D37700E2C781 /* CPingTool.m */; };
-		8B9BD3651178D37700E2C781 /* NSDate_SysTimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD3601178D37700E2C781 /* NSDate_SysTimeExtensions.m */; };
-		8B9BD3661178D37700E2C781 /* NSHost_PingToolExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9BD3621178D37700E2C781 /* NSHost_PingToolExtensions.m */; };
+		43F8E99E1300B91B00BE37CF /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F8E99D1300B91B00BE37CF /* SimplePing.m */; };
 		8BC7EF36117791F900BBE8F3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC7EF35117791F900BBE8F3 /* SystemConfiguration.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -59,6 +59,12 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		4317E1A01300C92B0073CEF9 /* NSString+ListContains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+ListContains.h"; path = "../../../../../Users/benjamin/Development/Personal/HudsonGrowl/NSString+ListContains.h"; sourceTree = "<group>"; };
+		4317E1A11300C92B0073CEF9 /* NSString+ListContains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ListContains.m"; path = "../../../../../Users/benjamin/Development/Personal/HudsonGrowl/NSString+ListContains.m"; sourceTree = "<group>"; };
+		4317E1A31300C9350073CEF9 /* HudsonServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HudsonServer.h; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonServer.h; sourceTree = "<group>"; };
+		4317E1A41300C9350073CEF9 /* HudsonServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HudsonServer.m; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonServer.m; sourceTree = "<group>"; };
+		4317E1A61300C9470073CEF9 /* HudsonJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HudsonJob.h; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonJob.h; sourceTree = "<group>"; };
+		4317E1A71300C9470073CEF9 /* HudsonJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HudsonJob.m; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonJob.m; sourceTree = "<group>"; };
 		433C0236118DC08E00A776D5 /* Gear.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Gear.icns; path = Resources/Gear.icns; sourceTree = "<group>"; };
 		43590587108BB5CD006ABCD5 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		435905E6108BB6C8006ABCD5 /* HGrowl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGrowl.h; sourceTree = "<group>"; };
@@ -81,14 +87,8 @@
 		43BD7F99118DAC2400E04E4C /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		43BD7F9C118DAC3C00E04E4C /* HudsonAPIQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudsonAPIQuery.h; sourceTree = "<group>"; };
 		43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonAPIQuery.m; sourceTree = "<group>"; };
-		8B9BD35B1178D37700E2C781 /* CPingTool_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPingTool_Private.h; path = Classes/PingTool/CPingTool_Private.h; sourceTree = "<group>"; };
-		8B9BD35C1178D37700E2C781 /* CPingTool_Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPingTool_Private.m; path = Classes/PingTool/CPingTool_Private.m; sourceTree = "<group>"; };
-		8B9BD35D1178D37700E2C781 /* CPingTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPingTool.h; path = Classes/PingTool/CPingTool.h; sourceTree = "<group>"; };
-		8B9BD35E1178D37700E2C781 /* CPingTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPingTool.m; path = Classes/PingTool/CPingTool.m; sourceTree = "<group>"; };
-		8B9BD35F1178D37700E2C781 /* NSDate_SysTimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDate_SysTimeExtensions.h; path = Classes/PingTool/NSDate_SysTimeExtensions.h; sourceTree = "<group>"; };
-		8B9BD3601178D37700E2C781 /* NSDate_SysTimeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSDate_SysTimeExtensions.m; path = Classes/PingTool/NSDate_SysTimeExtensions.m; sourceTree = "<group>"; };
-		8B9BD3611178D37700E2C781 /* NSHost_PingToolExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSHost_PingToolExtensions.h; path = Classes/PingTool/NSHost_PingToolExtensions.h; sourceTree = "<group>"; };
-		8B9BD3621178D37700E2C781 /* NSHost_PingToolExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSHost_PingToolExtensions.m; path = Classes/PingTool/NSHost_PingToolExtensions.m; sourceTree = "<group>"; };
+		43F8E99C1300B91B00BE37CF /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
+		43F8E99D1300B91B00BE37CF /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
 		8BC7EF35117791F900BBE8F3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* HudsonGrowl-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HudsonGrowl-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Hudson Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hudson Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,19 +111,13 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				43BD7F95118DAC1500E04E4C /* Base64 */,
-				8B9BD35A1178D36100E2C781 /* PingTool */,
-				4359061F108BB9F0006ABCD5 /* SynthesizeSingleton.h */,
-				435905E6108BB6C8006ABCD5 /* HGrowl.h */,
-				435905E7108BB6C8006ABCD5 /* HGrowl.m */,
+				433C1EF0128F4B630084A264 /* Communication */,
+				433C1EED128F4B420084A264 /* Controller */,
+				433C1EF1128F4B830084A264 /* Extensions */,
+				433C1EEF128F4B520084A264 /* Model */,
+				433C1EF2128F4BA20084A264 /* Utilities */,
 				256AC3D80F4B6AC300CF3369 /* HudsonGrowlAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */,
-				43590651108BBC8D006ABCD5 /* MyController.h */,
-				43590652108BBC8D006ABCD5 /* MyController.m */,
-				435907F2108C4CD4006ABCD5 /* HudsonResult.h */,
-				435907F3108C4CD4006ABCD5 /* HudsonResult.m */,
-				43BD7F9C118DAC3C00E04E4C /* HudsonAPIQuery.h */,
-				43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -204,30 +198,60 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		43BD7F95118DAC1500E04E4C /* Base64 */ = {
+		433C1EED128F4B420084A264 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				43590651108BBC8D006ABCD5 /* MyController.h */,
+				43590652108BBC8D006ABCD5 /* MyController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		433C1EEF128F4B520084A264 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4317E1A61300C9470073CEF9 /* HudsonJob.h */,
+				4317E1A71300C9470073CEF9 /* HudsonJob.m */,
+				435907F2108C4CD4006ABCD5 /* HudsonResult.h */,
+				435907F3108C4CD4006ABCD5 /* HudsonResult.m */,
+				4317E1A31300C9350073CEF9 /* HudsonServer.h */,
+				4317E1A41300C9350073CEF9 /* HudsonServer.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		433C1EF0128F4B630084A264 /* Communication */ = {
+			isa = PBXGroup;
+			children = (
+				43BD7F9C118DAC3C00E04E4C /* HudsonAPIQuery.h */,
+				43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */,
+				43F8E99C1300B91B00BE37CF /* SimplePing.h */,
+				43F8E99D1300B91B00BE37CF /* SimplePing.m */,
+			);
+			name = Communication;
+			sourceTree = "<group>";
+		};
+		433C1EF1128F4B830084A264 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				43BD7F96118DAC2300E04E4C /* NSString+Base64.h */,
 				43BD7F97118DAC2300E04E4C /* NSString+Base64.m */,
+				4317E1A01300C92B0073CEF9 /* NSString+ListContains.h */,
+				4317E1A11300C92B0073CEF9 /* NSString+ListContains.m */,
 				43BD7F98118DAC2400E04E4C /* base64.h */,
 				43BD7F99118DAC2400E04E4C /* base64.c */,
 			);
-			name = Base64;
+			name = Extensions;
 			sourceTree = "<group>";
 		};
-		8B9BD35A1178D36100E2C781 /* PingTool */ = {
+		433C1EF2128F4BA20084A264 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				8B9BD35B1178D37700E2C781 /* CPingTool_Private.h */,
-				8B9BD35C1178D37700E2C781 /* CPingTool_Private.m */,
-				8B9BD35D1178D37700E2C781 /* CPingTool.h */,
-				8B9BD35E1178D37700E2C781 /* CPingTool.m */,
-				8B9BD35F1178D37700E2C781 /* NSDate_SysTimeExtensions.h */,
-				8B9BD3601178D37700E2C781 /* NSDate_SysTimeExtensions.m */,
-				8B9BD3611178D37700E2C781 /* NSHost_PingToolExtensions.h */,
-				8B9BD3621178D37700E2C781 /* NSHost_PingToolExtensions.m */,
+				4359061F108BB9F0006ABCD5 /* SynthesizeSingleton.h */,
+				435905E6108BB6C8006ABCD5 /* HGrowl.h */,
+				435905E7108BB6C8006ABCD5 /* HGrowl.m */,
 			);
-			name = PingTool;
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +283,11 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HudsonGrowl" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* HudsonGrowl */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -299,13 +327,13 @@
 				435905E8108BB6C8006ABCD5 /* HGrowl.m in Sources */,
 				43590653108BBC8D006ABCD5 /* MyController.m in Sources */,
 				435907F4108C4CD4006ABCD5 /* HudsonResult.m in Sources */,
-				8B9BD3631178D37700E2C781 /* CPingTool_Private.m in Sources */,
-				8B9BD3641178D37700E2C781 /* CPingTool.m in Sources */,
-				8B9BD3651178D37700E2C781 /* NSDate_SysTimeExtensions.m in Sources */,
-				8B9BD3661178D37700E2C781 /* NSHost_PingToolExtensions.m in Sources */,
 				43BD7F9A118DAC2400E04E4C /* NSString+Base64.m in Sources */,
 				43BD7F9B118DAC2400E04E4C /* base64.c in Sources */,
 				43BD7F9E118DAC3C00E04E4C /* HudsonAPIQuery.m in Sources */,
+				43F8E99E1300B91B00BE37CF /* SimplePing.m in Sources */,
+				4317E1A21300C92B0073CEF9 /* NSString+ListContains.m in Sources */,
+				4317E1A51300C9350073CEF9 /* HudsonServer.m in Sources */,
+				4317E1A81300C9470073CEF9 /* HudsonJob.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

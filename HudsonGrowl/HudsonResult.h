@@ -18,19 +18,18 @@
 
 
 @interface HudsonResult : NSObject {
-	NSString* job;
-	int buildNr;
+
+	NSInteger buildNr;
 	BOOL success;
 	
 	NSString* link;
 }
 
-@property (readonly) NSString* job;
-@property (readonly) int buildNr;
+@property (readonly) NSInteger buildNr;
 @property (readonly) BOOL success;
 @property (readonly) NSString* link;
 
-+(HudsonResult*)resultWithJob:(NSString*)job buildNr:(int)nr success:(BOOL)success link:(NSString*)link;
--(id)initWithJob:(NSString*)job buildNr:(int)nr success:(BOOL)success link:(NSString*)link;
++(HudsonResult*)resultWithBuildNr:(NSInteger)nr success:(BOOL)success link:(NSString*)link;
+-(id)initWithBuildNr:(NSInteger)nr success:(BOOL)success link:(NSString*)link;
 
 @end

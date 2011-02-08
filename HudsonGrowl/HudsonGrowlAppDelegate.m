@@ -16,12 +16,8 @@
 
 #import "HudsonGrowlAppDelegate.h"
 
+
 @implementation HudsonGrowlAppDelegate
 
-@synthesize window;
-
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-		
-}
 
 @end

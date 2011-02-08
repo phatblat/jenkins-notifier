@@ -119,15 +119,15 @@
 }
 
 - (void)connection:(NSURLConnection *)conn didReceiveResponse:(NSURLResponse *)urlResponse {
-	NSHTTPURLResponse *httpResponse;
+	/*NSHTTPURLResponse *httpResponse;
 	if ([urlResponse isKindOfClass:[NSHTTPURLResponse class]]) {
 		httpResponse = (NSHTTPURLResponse *) urlResponse;
 	} else {
 		httpResponse = nil;
 	}
 	
-	//NSLog(@"ResponseStatus: %u\n", [httpResponse statusCode]);
-	//NSLog(@"ResponseHeaders:\n%@", [httpResponse allHeaderFields]);
+	NSLog(@"ResponseStatus: %u\n", [httpResponse statusCode]);
+	NSLog(@"ResponseHeaders:\n%@", [httpResponse allHeaderFields]);*/
 }
 
 - (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data {
