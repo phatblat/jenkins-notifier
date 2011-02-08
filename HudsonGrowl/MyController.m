@@ -29,6 +29,7 @@ NSString *MyControllerWhitelistKey = @"MyControllerWhitelistKey";
 NSString *MyControllerBlacklistKey = @"MyControllerBlacklistKey";
 NSString *MyControllerShouldUseStickyNotificationsKey = @"MyControllerShouldUseStickyNotificationsKey";
 NSString *MyControllerShouldUseContinuousNotificationsKey = @"MyControllerShouldUseContinuousNotificationsKey";
+NSString *MyControllerShouldPingBeforeConnectKey = @"MyControllerShouldPingBeforeConnectKey";
 NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMinutesKey";
 
 
@@ -39,7 +40,9 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 - (NSString*) commaSeparatedListFromStringArray:(NSArray*)a;
 - (NSArray*) stringArrayFromCommaSeparatedList:(NSString*)s;
 
+- (void) parseFeed:(NSString *)feed;
 - (void) parseRSS:(NSString *)feedURL;
+- (void) parseAPI:(NSString *)hudsonInstall;
 - (void) openBrowserForResult:(HudsonResult*)result;
 - (void) updateStatus:(HudsonServer*)server;
 
@@ -60,6 +63,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 @property (nonatomic, readwrite, assign) NSUInteger numUnconnectableHosts;
 @property (nonatomic, readwrite, assign) BOOL shouldUseStickyNotifications;
 @property (nonatomic, readwrite, assign) BOOL shouldUseContinuousNotifications;
+@property (nonatomic, readwrite, assign) BOOL shouldPingBeforeConnect;
 @property (nonatomic, readwrite, retain) NSTimer *updateTimer;
 @property (nonatomic, readwrite, assign) NSTimeInterval pollIntervalInMinutes;
 @property (nonatomic, readwrite, retain) SimplePing *currentPingTool;
@@ -73,7 +77,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 #pragma mark Properties
 
 @synthesize preferences, theMenu, feedsTextField, whitelistTextField, blacklistTextField, feeds, whitelist, blacklist, theItem, numDefaultMenuItems;
-@synthesize lastResultsByJob, menuItemsByJob, stickyNotificationCheckbox, shouldUseStickyNotifications, continuousNotificationCheckbox, shouldUseContinuousNotifications;
+@synthesize lastResultsByJob, menuItemsByJob, stickyNotificationCheckbox, shouldUseStickyNotifications, continuousNotificationCheckbox, shouldUseContinuousNotifications, pingBeforeConnectCheckbox, shouldPingBeforeConnect;
 @synthesize numConnectableHosts, numUnconnectableHosts, updateTimer, pollIntervalInMinutes, currentPingTool;
 
 
@@ -104,20 +108,18 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	self.feeds = [[NSUserDefaults standardUserDefaults] stringArrayForKey:MyControllerFeedsKey];
 	self.whitelist = [[NSUserDefaults standardUserDefaults] stringArrayForKey:MyControllerWhitelistKey];
 	self.blacklist = [[NSUserDefaults standardUserDefaults] stringArrayForKey:MyControllerBlacklistKey];
-	BOOL stickyNotificationsHasValue = [[NSUserDefaults standardUserDefaults] objectForKey:MyControllerShouldUseStickyNotificationsKey] == nil ? NO: YES;
+	
+    BOOL stickyNotificationsHasValue = [[NSUserDefaults standardUserDefaults] objectForKey:MyControllerShouldUseStickyNotificationsKey] == nil ? NO: YES;
 	BOOL continuousNotificationsHasValue = [[NSUserDefaults standardUserDefaults] objectForKey:MyControllerShouldUseContinuousNotificationsKey] == nil ? NO : YES;
+	BOOL pingBeforeConnectHasValue = [[NSUserDefaults standardUserDefaults] objectForKey:MyControllerShouldPingBeforeConnectKey] == nil ? NO : YES;
 	BOOL pollIntervalInMinutesHasValue = [[NSUserDefaults standardUserDefaults] objectForKey:MyControllerPollIntervalInMinutesKey] == nil ? NO : YES;
+    
 	self.shouldUseStickyNotifications = stickyNotificationsHasValue ? [[NSUserDefaults standardUserDefaults] boolForKey:MyControllerShouldUseStickyNotificationsKey] : YES; // default yes
 	self.shouldUseContinuousNotifications = continuousNotificationsHasValue ? [[NSUserDefaults standardUserDefaults] boolForKey:MyControllerShouldUseContinuousNotificationsKey] : NO; // default to no
+    self.shouldPingBeforeConnect = pingBeforeConnectHasValue ? [[NSUserDefaults standardUserDefaults] boolForKey:MyControllerShouldPingBeforeConnectKey] : YES; // default to yes
+    
 	self.pollIntervalInMinutes = pollIntervalInMinutesHasValue ? [[NSUserDefaults standardUserDefaults] floatForKey:MyControllerPollIntervalInMinutesKey] : 1.0f; // default to 1 minute
 			
-	// Start looking for valid servers
-	/*[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidReceivePacketNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidLosePacketNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidFailNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePingNotificationOnMainThread:) name:TXPingToolDidFinishNotification object:nil];*/
-
-	
 	self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:self.pollIntervalInMinutes * 60.0f
 														target:self
 													  selector:@selector(startUpdates:)
@@ -164,6 +166,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	self.blacklistTextField.stringValue = [self commaSeparatedListFromStringArray:self.blacklist];
 	self.stickyNotificationCheckbox.state = self.shouldUseStickyNotifications ? NSOnState : NSOffState;
 	self.continuousNotificationCheckbox.state = self.shouldUseContinuousNotifications ? NSOnState : NSOffState;
+    self.pingBeforeConnectCheckbox.state = self.shouldPingBeforeConnect ? NSOnState : NSOffState;
 
 	// Prepare the window for display
 	[preferences center];
@@ -180,8 +183,9 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	self.feeds = [self stringArrayFromCommaSeparatedList:self.feedsTextField.stringValue];
 	self.whitelist = [self stringArrayFromCommaSeparatedList:self.whitelistTextField.stringValue];	
 	self.blacklist = [self stringArrayFromCommaSeparatedList:self.blacklistTextField.stringValue];
-	self.shouldUseStickyNotifications = ([self.stickyNotificationCheckbox state] == NSOnState) ? YES : NO;
-	self.shouldUseContinuousNotifications = ([self.continuousNotificationCheckbox state] == NSOnState) ? YES : NO;
+	self.shouldUseStickyNotifications = ([self.stickyNotificationCheckbox state] == NSOnState);
+	self.shouldUseContinuousNotifications = ([self.continuousNotificationCheckbox state] == NSOnState);
+    self.shouldPingBeforeConnect = ([self.pingBeforeConnectCheckbox state] == NSOnState);
 	// TODO: Add UI control for poll timer
 	// self.pollIntervalInMinutes = ([self.pollIntervalInMinutesTextField.stringValue floatValue]  // error checking range, int to float, etc
 	
@@ -191,6 +195,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	[[NSUserDefaults standardUserDefaults] setObject:self.blacklist forKey:MyControllerBlacklistKey];
 	[[NSUserDefaults standardUserDefaults] setBool:self.shouldUseStickyNotifications forKey:MyControllerShouldUseStickyNotificationsKey];
 	[[NSUserDefaults standardUserDefaults] setBool:self.shouldUseContinuousNotifications forKey:MyControllerShouldUseContinuousNotificationsKey];
+    [[NSUserDefaults standardUserDefaults] setBool:self.shouldPingBeforeConnect forKey:MyControllerShouldPingBeforeConnectKey];
 	[[NSUserDefaults standardUserDefaults] setFloat:self.pollIntervalInMinutes forKey:MyControllerPollIntervalInMinutesKey];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	
@@ -263,9 +268,27 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 
 #pragma mark Hudson Data Retrieval
 
-- (void) parseRSS:(NSString *)feed {
+- (void)parseFeed:(NSString *)feed {
+    // this method should run on a separate thread. if we're on the main thread, spawn a
+    // background thread.
+    if ([NSThread isMainThread]) {
+        [self performSelectorInBackground:@selector(parseFeed:) withObject:feed];
+        return;
+    }
+    
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
+    // parse the feed with the appropriate technique
+    if ([feed hasSuffix:@"/rssAll"]) {
+        [self parseRSS:feed];
+    } else {
+        [self parseAPI:feed];
+    }
+    
+    [pool release];
+}
+
+- (void) parseRSS:(NSString *)feed {
     HudsonServer* server = [HudsonServer serverWithLegacyConnectionString:feed];
     server.whitelist = self.whitelist;
     server.blacklist = self.blacklist;
@@ -310,15 +333,10 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	
 	[DOM release];
 	
-	//[self updateStatus:server];
     [self performSelectorOnMainThread:@selector(updateStatus:) withObject:server waitUntilDone:YES];
-    
-    [pool release];
 }
 
 - (void) parseAPI:(NSString*)hudsonInstall {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
     HudsonServer* server = [HudsonServer serverWithLegacyConnectionString:hudsonInstall];
     server.whitelist = self.whitelist;
     server.blacklist = self.blacklist;
@@ -365,10 +383,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
     NSTimeInterval taken = -[startedAt timeIntervalSinceNow];
     NSLog(@"time taken parsing feed from %@: %f secs", [server.url host], taken);
 	
-	//[self updateStatus:server];
     [self performSelectorOnMainThread:@selector(updateStatus:) withObject:server waitUntilDone:YES];
-    
-    [pool release];
 }
 
 
@@ -480,8 +495,15 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	self.numConnectableHosts = 0;
 	self.numUnconnectableHosts = 0;	
 	
-	// kick off the updates
-	[self nextUpdate];
+    if (shouldPingBeforeConnect) {
+        // kick off a first ping
+        [self nextUpdate];
+    } else {
+        // connect without an initial ping
+        for (NSString *feed in feeds) {
+            [self parseFeed:feed];
+        }
+    }
 }
 
 - (void)nextUpdate
@@ -570,15 +592,8 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 - (void)simplePing:(SimplePing *)pinger didReceivePingResponsePacket:(NSData *)packet {
     NSLog(@"### received response from host: %@", pinger.hostName);
     
-    // Parse the RSS feed
     NSString *feed = [feeds objectAtIndex:(self.numConnectableHosts + self.numUnconnectableHosts)];
-    if ([feed hasSuffix:@"/rssAll"]) {
-        //[self parseRSS:feed];
-        [self performSelectorInBackground:@selector(parseRSS:) withObject:feed];
-    } else {
-        //[self parseAPI:feed];
-        [self performSelectorInBackground:@selector(parseAPI:) withObject:feed];
-    }
+    [self parseFeed:feed];
     
     self.numConnectableHosts++;
     [self pingFinished];
@@ -601,83 +616,9 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 }
 
 - (void)pingFinished {
+    // ping to a single Hudson Server finished. continue pinging if necessary.
     [self nextUpdate];
 }
-
-
-// old ping tool
-/*- (BOOL)pingFeedServer:(NSString *)feed
-{
-	NSLog(@"### attempting to connect to feed: %@", feed);
-	
-	BOOL initiatedPing = NO;
-	NSString *hostname = [[NSURL URLWithString:feed] host];
-	BOOL isHostReachable = [hostname length] > 0 && [self isHostReachable:hostname];
-
-	// Check if we have an outbound network connection (host is reachable) & and if there is an address mapping
-	if (isHostReachable)
-	{	
-		NSHost *host = [NSHost hostWithName:hostname];
-		if (host != nil)
-		{
-			// Next ping it to see if it responds
-			self.currentPingTool = [[[CPingTool alloc] init] autorelease];
-			[self.currentPingTool setHost:host];
-			[self.currentPingTool setTimeout:0.2f];
-			[self.currentPingTool setPingCount:1];
-			[self.currentPingTool ping];
-			initiatedPing = YES;
-		}
-	}
-	
-	return initiatedPing;
-}
-
-- (void)handlePingNotificationOnMainThread:(NSNotification *)notification
-{
-	[self performSelectorOnMainThread:@selector(handlePingNotification:) withObject:notification waitUntilDone:YES];
-}
-
-- (void)handlePingNotification:(NSNotification *)notification
-{	
-	NSString *host = [[[notification userInfo] objectForKey:@"host"] name];
-
-	if ([[notification name] isEqualToString:TXPingToolDidFinishNotification])
-	{		
-		// Continue with the updates, because we were paused while waiting for the notification to finish
-		[self nextUpdate];
-	}
-	else if ([[notification name] isEqualToString:TXPingToolDidReceivePacketNotification]) 
-	{
-		NSLog(@"### received response from host: %@", host);
-		
-		// Parse the RSS feed
-		NSString *feed = [feeds objectAtIndex:(self.numConnectableHosts + self.numUnconnectableHosts)];
-		if ([feed hasSuffix:@"/rssAll"]) {
-			[self parseRSS:feed];
-		} else {
-			[self parseAPI:feed];
-		}
-		
-		self.numConnectableHosts++;
-	}
-	else if ([[notification name] isEqualToString:TXPingToolDidFailNotification] ||
-			 [[notification name] isEqualToString:TXPingToolDidLosePacketNotification])
-	{
-		BOOL wasPingLost = ([[notification userInfo] objectForKey:@"packetSequenceNumber"] != nil);
-		if (wasPingLost)
-		{
-			NSLog(@"### lost packet to host: %@", host);
-		}
-		else
-		{
-			NSLog(@"### pingtool bailed attempting to reach host: %@", host);
-		}
-		
-		// TODO: Gray out menu items associated with this host
-		self.numUnconnectableHosts++;		
-	} 	
-}*/
 
 
 #pragma mark Dealloc
@@ -696,6 +637,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	[blacklist release]; blacklist = nil;
 	[stickyNotificationCheckbox release]; stickyNotificationCheckbox = nil;
 	[continuousNotificationCheckbox release]; continuousNotificationCheckbox = nil;
+    [pingBeforeConnectCheckbox release]; pingBeforeConnectCheckbox = nil;
 	[currentPingTool release]; currentPingTool = nil;
 	
 	[updateTimer invalidate]; updateTimer = nil;	

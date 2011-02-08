@@ -34,6 +34,7 @@
 	NSTextField *blacklistTextField;
 	NSButton *continuousNotificationCheckbox;
 	NSButton *stickyNotificationCheckbox;
+    NSButton *pingBeforeConnectCheckbox;
     
     // Model
     // - Settings
@@ -42,6 +43,7 @@
 	NSArray *blacklist;
 	BOOL shouldUseContinuousNotifications;
 	BOOL shouldUseStickyNotifications;
+    BOOL shouldPingBeforeConnect;
 	NSTimeInterval pollIntervalInMinutes;
     // - Data
 	NSMutableDictionary* lastResultsByJob;
@@ -63,6 +65,7 @@
 @property (nonatomic, readwrite, retain) IBOutlet NSTextField *blacklistTextField;
 @property (nonatomic, readwrite, retain) IBOutlet NSButton *stickyNotificationCheckbox;
 @property (nonatomic, readwrite, retain) IBOutlet NSButton *continuousNotificationCheckbox;
+@property (nonatomic, readwrite, retain) IBOutlet NSButton *pingBeforeConnectCheckbox;
 @property (nonatomic, readwrite, retain) NSStatusItem *theItem;
 
 - (IBAction) clickOpenBuild:(id)sender;
