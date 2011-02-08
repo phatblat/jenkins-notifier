@@ -38,7 +38,7 @@
 	NSString* xml = [q->responseText retain];
 	[q release];
 	
-	return xml;
+	return [xml autorelease];
 }
 
 
@@ -49,9 +49,9 @@
 	
 	if ((self = [super init])) {
 		delegate = [d retain];
-		query = [apiCall retain];
-		username = [user retain];
-		password = [pass retain];
+		query = [apiCall copy];
+		username = [user copy];
+		password = [pass copy];
 	}
 	
 	return self;
@@ -80,7 +80,7 @@
 	// send an authentication challenge
 	// (http://wiki.hudson-ci.org/display/HUDSON/Authenticating+scripted+clients)
 	NSString* format = [NSString stringWithFormat:@"%@:%@", username, password];
-	NSString* auth = [NSString stringWithFormat:@"Basic %@", [format base64Encoding]];
+	NSString* auth = [NSString stringWithFormat:@"Basic %@", [format base64String]];
 	[req addValue:auth forHTTPHeaderField:@"Authorization"];
 	[req setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
 	

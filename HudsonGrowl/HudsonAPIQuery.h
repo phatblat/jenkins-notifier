@@ -19,7 +19,7 @@
 @class HudsonAPIQuery;
 
 
-@protocol HudsonAPIQueryDelegate
+@protocol HudsonAPIQueryDelegate <NSObject>
 
 - (void) query:(HudsonAPIQuery*)query completedWithXML:(NSString*)xml;
 - (void) query:(HudsonAPIQuery*)query didFailWithError:(NSError*)error;
@@ -30,7 +30,7 @@
 
 @interface HudsonAPIQuery : NSObject {
 
-	id<HudsonAPIQueryDelegate,NSObject> delegate;
+	id<HudsonAPIQueryDelegate> delegate;
 	
 	NSString* query;
 	NSString* username;

@@ -12,6 +12,7 @@
 		4317E1A21300C92B0073CEF9 /* NSString+ListContains.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1A11300C92B0073CEF9 /* NSString+ListContains.m */; };
 		4317E1A51300C9350073CEF9 /* HudsonServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1A41300C9350073CEF9 /* HudsonServer.m */; };
 		4317E1A81300C9470073CEF9 /* HudsonJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1A71300C9470073CEF9 /* HudsonJob.m */; };
+		4317E1B413012C680073CEF9 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1B313012C680073CEF9 /* NSString+Base64.m */; };
 		433C0237118DC08E00A776D5 /* Gear.icns in Resources */ = {isa = PBXBuildFile; fileRef = 433C0236118DC08E00A776D5 /* Gear.icns */; };
 		43590588108BB5CD006ABCD5 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43590587108BB5CD006ABCD5 /* Growl.framework */; };
 		435905C6108BB664006ABCD5 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43590587108BB5CD006ABCD5 /* Growl.framework */; };
@@ -25,8 +26,6 @@
 		43590880108D087D006ABCD5 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4359087D108D087D006ABCD5 /* icon2.png */; };
 		43590885108D08F1006ABCD5 /* menu_failure.png in Resources */ = {isa = PBXBuildFile; fileRef = 43590883108D08F1006ABCD5 /* menu_failure.png */; };
 		43590886108D08F1006ABCD5 /* menu_success.png in Resources */ = {isa = PBXBuildFile; fileRef = 43590884108D08F1006ABCD5 /* menu_success.png */; };
-		43BD7F9A118DAC2400E04E4C /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD7F97118DAC2300E04E4C /* NSString+Base64.m */; };
-		43BD7F9B118DAC2400E04E4C /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 43BD7F99118DAC2400E04E4C /* base64.c */; };
 		43BD7F9E118DAC3C00E04E4C /* HudsonAPIQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */; };
 		43F8E99E1300B91B00BE37CF /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F8E99D1300B91B00BE37CF /* SimplePing.m */; };
 		8BC7EF36117791F900BBE8F3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC7EF35117791F900BBE8F3 /* SystemConfiguration.framework */; };
@@ -65,6 +64,8 @@
 		4317E1A41300C9350073CEF9 /* HudsonServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HudsonServer.m; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonServer.m; sourceTree = "<group>"; };
 		4317E1A61300C9470073CEF9 /* HudsonJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HudsonJob.h; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonJob.h; sourceTree = "<group>"; };
 		4317E1A71300C9470073CEF9 /* HudsonJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HudsonJob.m; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonJob.m; sourceTree = "<group>"; };
+		4317E1B213012C680073CEF9 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
+		4317E1B313012C680073CEF9 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		433C0236118DC08E00A776D5 /* Gear.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Gear.icns; path = Resources/Gear.icns; sourceTree = "<group>"; };
 		43590587108BB5CD006ABCD5 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		435905E6108BB6C8006ABCD5 /* HGrowl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGrowl.h; sourceTree = "<group>"; };
@@ -81,10 +82,6 @@
 		4359087D108D087D006ABCD5 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon2.png; path = Resources/icon2.png; sourceTree = "<group>"; };
 		43590883108D08F1006ABCD5 /* menu_failure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_failure.png; path = Resources/menu_failure.png; sourceTree = "<group>"; };
 		43590884108D08F1006ABCD5 /* menu_success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_success.png; path = Resources/menu_success.png; sourceTree = "<group>"; };
-		43BD7F96118DAC2300E04E4C /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
-		43BD7F97118DAC2300E04E4C /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
-		43BD7F98118DAC2400E04E4C /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
-		43BD7F99118DAC2400E04E4C /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		43BD7F9C118DAC3C00E04E4C /* HudsonAPIQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudsonAPIQuery.h; sourceTree = "<group>"; };
 		43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonAPIQuery.m; sourceTree = "<group>"; };
 		43F8E99C1300B91B00BE37CF /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
@@ -234,12 +231,10 @@
 		433C1EF1128F4B830084A264 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				43BD7F96118DAC2300E04E4C /* NSString+Base64.h */,
-				43BD7F97118DAC2300E04E4C /* NSString+Base64.m */,
+				4317E1B213012C680073CEF9 /* NSString+Base64.h */,
+				4317E1B313012C680073CEF9 /* NSString+Base64.m */,
 				4317E1A01300C92B0073CEF9 /* NSString+ListContains.h */,
 				4317E1A11300C92B0073CEF9 /* NSString+ListContains.m */,
-				43BD7F98118DAC2400E04E4C /* base64.h */,
-				43BD7F99118DAC2400E04E4C /* base64.c */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -327,13 +322,12 @@
 				435905E8108BB6C8006ABCD5 /* HGrowl.m in Sources */,
 				43590653108BBC8D006ABCD5 /* MyController.m in Sources */,
 				435907F4108C4CD4006ABCD5 /* HudsonResult.m in Sources */,
-				43BD7F9A118DAC2400E04E4C /* NSString+Base64.m in Sources */,
-				43BD7F9B118DAC2400E04E4C /* base64.c in Sources */,
 				43BD7F9E118DAC3C00E04E4C /* HudsonAPIQuery.m in Sources */,
 				43F8E99E1300B91B00BE37CF /* SimplePing.m in Sources */,
 				4317E1A21300C92B0073CEF9 /* NSString+ListContains.m in Sources */,
 				4317E1A51300C9350073CEF9 /* HudsonServer.m in Sources */,
 				4317E1A81300C9470073CEF9 /* HudsonJob.m in Sources */,
+				4317E1B413012C680073CEF9 /* NSString+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
