@@ -231,14 +231,11 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	if (url != nil) [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
-- (NSString *)commaSeparatedListFromStringArray:(NSArray *)stringArray
-{
+- (NSString *)commaSeparatedListFromStringArray:(NSArray *)stringArray {
 	NSString *commaSeparatedList = @"";
 	
-	for (NSString *string in stringArray)
-	{
-		if ([commaSeparatedList length] > 0)
-		{
+	for (NSString *string in stringArray) {
+		if ([commaSeparatedList length] > 0) {
 			commaSeparatedList = [NSString stringWithFormat:@"%@, ", commaSeparatedList];
 		}
 		commaSeparatedList = [NSString stringWithFormat:@"%@%@", commaSeparatedList, string];
@@ -247,16 +244,14 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	return commaSeparatedList;
 }
 
-- (NSArray *)stringArrayFromCommaSeparatedList:(NSString *)list
-{
+- (NSArray *)stringArrayFromCommaSeparatedList:(NSString *)list {
 	NSScanner *scanner = [NSScanner scannerWithString:list];
 	NSString *sep = @",";
 	NSString *element;
 	NSMutableArray *stringArray = [[[NSMutableArray alloc] init] autorelease];
 	
 	// Keep reading from the list until we're done
-	while ( [scanner scanUpToString:sep intoString:&element] )
-	{
+	while ([scanner scanUpToString:sep intoString:&element]) {
 		[scanner scanString:sep intoString:NULL];
 		element = [element stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		[stringArray addObject:[[element copy] autorelease]];
@@ -349,36 +344,40 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	NSString* xml = [HudsonAPIQuery synchronousQuery:[server apiCall] user:server.username password:server.password];
     
 	// load the URL into an NSXMLDocument and get the root element
-    NSError *error = nil;
-	NSXMLDocument* DOM = [[NSXMLDocument alloc] initWithXMLString:xml options:NSXMLNodeOptionsNone error:&error];
-    if (error != nil) {
-        NSLog(@"error parsing feed from %@. error: %@", [server.url host], error);
-    } else {
-        // iterate through all entries
-        NSXMLElement* root = [DOM rootElement];
-        NSArray* nodes = [root nodesForXPath:@"lastBuild" error:nil];
-        
-        for (NSXMLElement* entry in nodes) {
+    if (xml != nil) {
+        NSError *error = nil;
+        NSXMLDocument* DOM = [[NSXMLDocument alloc] initWithXMLString:xml options:NSXMLNodeOptionsNone error:&error];
+        if (error != nil) {
+            NSLog(@"error parsing feed from %@. error: %@", [server.url host], error);
+        } else {
+            // iterate through all entries
+            NSXMLElement* root = [DOM rootElement];
+            NSArray* nodes = [root nodesForXPath:@"lastBuild" error:nil];
             
-            NSString* buildName = [[[entry elementsForName:@"fullDisplayName"] objectAtIndex:0] stringValue];
-            NSRange rangeOfBuildNumberHash = [buildName rangeOfString:@"#" options:NSBackwardsSearch];
-            NSRange rangeOfJobName;
-            rangeOfJobName.location = 0;
-            rangeOfJobName.length = rangeOfBuildNumberHash.location;
-            
-            NSString* jobName = [[buildName substringWithRange:rangeOfJobName] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            NSInteger buildNr = [[[[entry elementsForName:@"number"] objectAtIndex:0] stringValue] intValue];
-            NSString* result = [[[entry elementsForName:@"result"] objectAtIndex:0] stringValue];
-            NSString* link = [[[[entry elementsForName:@"url"] objectAtIndex:0] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            BOOL success = [result isEqual:@"SUCCESS"];
+            for (NSXMLElement* entry in nodes) {
                 
-            HudsonJob* job = [HudsonJob jobWithName:jobName];
-            job.lastResult = [HudsonResult resultWithBuildNr:buildNr success:success link:link];
-            [server.jobs addObject:job];
+                NSString* buildName = [[[entry elementsForName:@"fullDisplayName"] objectAtIndex:0] stringValue];
+                NSRange rangeOfBuildNumberHash = [buildName rangeOfString:@"#" options:NSBackwardsSearch];
+                NSRange rangeOfJobName;
+                rangeOfJobName.location = 0;
+                rangeOfJobName.length = rangeOfBuildNumberHash.location;
+                
+                NSString* jobName = [[buildName substringWithRange:rangeOfJobName] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                NSInteger buildNr = [[[[entry elementsForName:@"number"] objectAtIndex:0] stringValue] intValue];
+                NSString* result = [[[entry elementsForName:@"result"] objectAtIndex:0] stringValue];
+                NSString* link = [[[[entry elementsForName:@"url"] objectAtIndex:0] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                BOOL success = [result isEqual:@"SUCCESS"];
+                    
+                HudsonJob* job = [HudsonJob jobWithName:jobName];
+                job.lastResult = [HudsonResult resultWithBuildNr:buildNr success:success link:link];
+                [server.jobs addObject:job];
+            }
         }
+        
+        [DOM release];
+    } else {
+        NSLog(@"xml download failed");
     }
-    
-    [DOM release];
     
     NSTimeInterval taken = -[startedAt timeIntervalSinceNow];
     NSLog(@"time taken parsing feed from %@: %f secs", [server.url host], taken);

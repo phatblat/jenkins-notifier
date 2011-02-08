@@ -42,7 +42,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HGrowl, instance);
 }
 
 - (id)init {
-	if(self = [super init])
+	if((self = [super init]))
 	{
 		[GrowlApplicationBridge setGrowlDelegate:self];
 		[GrowlApplicationBridge registerWithDictionary:[self registrationDictionaryForGrowl]];

@@ -33,13 +33,19 @@
     NSMutableArray* result = [NSMutableArray array];
     
     for (HudsonJob* job in self.jobs) {
+        BOOL hasWhitelistEntries = ([self.whitelist count] > 0);
+        BOOL isOnWhitelist = (!hasWhitelistEntries || [job.name containsSubstringFromList:self.whitelist]);
+        BOOL isOnBlacklist = ([self.blacklist count] > 0 && [job.name containsSubstringFromList:self.blacklist]);
+        
         // Only return the job if its name is
         // 1) on the whitelist and not on the blacklist
-        // 2) there is no whitelist, and it is not on the blacklist
-        BOOL isOnWhitelist = [self.whitelist count] == 0 || [job.name containsSubstringFromList:self.whitelist];
-        BOOL isOnBlacklist = [self.blacklist count] > 0 && [job.name containsSubstringFromList:self.blacklist];
+        // 2) there are no whitelist entries and it is not on the blacklist
         
-        if (isOnWhitelist && !isOnBlacklist) [result addObject:job];
+        if ((isOnWhitelist && !isOnBlacklist)
+            || (!hasWhitelistEntries && !isOnBlacklist)) {
+            
+            [result addObject:job];
+        }
     }
     
     return result;
