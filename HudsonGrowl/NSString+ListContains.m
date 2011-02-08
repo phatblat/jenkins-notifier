@@ -20,17 +20,13 @@
 
 @implementation NSString (ListContains)
 
-- (BOOL) containsSubstringFromList:(NSArray *)list
-{
+- (BOOL) containsSubstringFromList:(NSArray *)list {
 	BOOL wasSubstringFound = NO;
 	
-	for (NSString *substring in list)
-	{
-		if ([substring length] > 0)
-		{
-			NSRange range = [self rangeOfString:substring];
-			if (range.location != NSNotFound)
-			{
+	for (NSString *substring in list) {
+		if ([substring length] > 0) {
+			NSRange range = [self rangeOfString:substring options:NSCaseInsensitiveSearch];
+			if (range.location != NSNotFound) {
 				wasSubstringFound = YES;
 				break;
 			}
