@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */; };
-		4317E1A21300C92B0073CEF9 /* NSString+ListContains.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1A11300C92B0073CEF9 /* NSString+ListContains.m */; };
-		4317E1A51300C9350073CEF9 /* HudsonServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1A41300C9350073CEF9 /* HudsonServer.m */; };
-		4317E1A81300C9470073CEF9 /* HudsonJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1A71300C9470073CEF9 /* HudsonJob.m */; };
 		4317E1B413012C680073CEF9 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1B313012C680073CEF9 /* NSString+Base64.m */; };
 		433C0237118DC08E00A776D5 /* Gear.icns in Resources */ = {isa = PBXBuildFile; fileRef = 433C0236118DC08E00A776D5 /* Gear.icns */; };
 		43590588108BB5CD006ABCD5 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43590587108BB5CD006ABCD5 /* Growl.framework */; };
@@ -32,6 +29,9 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		9C38D1701305D6F4004E031B /* HudsonJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C38D16D1305D6F4004E031B /* HudsonJob.m */; };
+		9C38D1711305D6F4004E031B /* HudsonServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C38D16F1305D6F4004E031B /* HudsonServer.m */; };
+		9C38D1741305D70E004E031B /* NSString+ListContains.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C38D1731305D70E004E031B /* NSString+ListContains.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,12 +58,6 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		4317E1A01300C92B0073CEF9 /* NSString+ListContains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+ListContains.h"; path = "../../../../../Users/benjamin/Development/Personal/HudsonGrowl/NSString+ListContains.h"; sourceTree = "<group>"; };
-		4317E1A11300C92B0073CEF9 /* NSString+ListContains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ListContains.m"; path = "../../../../../Users/benjamin/Development/Personal/HudsonGrowl/NSString+ListContains.m"; sourceTree = "<group>"; };
-		4317E1A31300C9350073CEF9 /* HudsonServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HudsonServer.h; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonServer.h; sourceTree = "<group>"; };
-		4317E1A41300C9350073CEF9 /* HudsonServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HudsonServer.m; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonServer.m; sourceTree = "<group>"; };
-		4317E1A61300C9470073CEF9 /* HudsonJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HudsonJob.h; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonJob.h; sourceTree = "<group>"; };
-		4317E1A71300C9470073CEF9 /* HudsonJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HudsonJob.m; path = ../../../../../Users/benjamin/Development/Personal/HudsonGrowl/HudsonJob.m; sourceTree = "<group>"; };
 		4317E1B213012C680073CEF9 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
 		4317E1B313012C680073CEF9 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		433C0236118DC08E00A776D5 /* Gear.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Gear.icns; path = Resources/Gear.icns; sourceTree = "<group>"; };
@@ -89,6 +83,12 @@
 		8BC7EF35117791F900BBE8F3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* HudsonGrowl-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HudsonGrowl-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Hudson Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hudson Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C38D16C1305D6F4004E031B /* HudsonJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudsonJob.h; sourceTree = "<group>"; };
+		9C38D16D1305D6F4004E031B /* HudsonJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonJob.m; sourceTree = "<group>"; };
+		9C38D16E1305D6F4004E031B /* HudsonServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudsonServer.h; sourceTree = "<group>"; };
+		9C38D16F1305D6F4004E031B /* HudsonServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonServer.m; sourceTree = "<group>"; };
+		9C38D1721305D70E004E031B /* NSString+ListContains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ListContains.h"; sourceTree = "<group>"; };
+		9C38D1731305D70E004E031B /* NSString+ListContains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ListContains.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,12 +207,12 @@
 		433C1EEF128F4B520084A264 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4317E1A61300C9470073CEF9 /* HudsonJob.h */,
-				4317E1A71300C9470073CEF9 /* HudsonJob.m */,
 				435907F2108C4CD4006ABCD5 /* HudsonResult.h */,
 				435907F3108C4CD4006ABCD5 /* HudsonResult.m */,
-				4317E1A31300C9350073CEF9 /* HudsonServer.h */,
-				4317E1A41300C9350073CEF9 /* HudsonServer.m */,
+				9C38D16C1305D6F4004E031B /* HudsonJob.h */,
+				9C38D16D1305D6F4004E031B /* HudsonJob.m */,
+				9C38D16E1305D6F4004E031B /* HudsonServer.h */,
+				9C38D16F1305D6F4004E031B /* HudsonServer.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -231,10 +231,10 @@
 		433C1EF1128F4B830084A264 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9C38D1721305D70E004E031B /* NSString+ListContains.h */,
+				9C38D1731305D70E004E031B /* NSString+ListContains.m */,
 				4317E1B213012C680073CEF9 /* NSString+Base64.h */,
 				4317E1B313012C680073CEF9 /* NSString+Base64.m */,
-				4317E1A01300C92B0073CEF9 /* NSString+ListContains.h */,
-				4317E1A11300C92B0073CEF9 /* NSString+ListContains.m */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -324,10 +324,10 @@
 				435907F4108C4CD4006ABCD5 /* HudsonResult.m in Sources */,
 				43BD7F9E118DAC3C00E04E4C /* HudsonAPIQuery.m in Sources */,
 				43F8E99E1300B91B00BE37CF /* SimplePing.m in Sources */,
-				4317E1A21300C92B0073CEF9 /* NSString+ListContains.m in Sources */,
-				4317E1A51300C9350073CEF9 /* HudsonServer.m in Sources */,
-				4317E1A81300C9470073CEF9 /* HudsonJob.m in Sources */,
 				4317E1B413012C680073CEF9 /* NSString+Base64.m in Sources */,
+				9C38D1701305D6F4004E031B /* HudsonJob.m in Sources */,
+				9C38D1711305D6F4004E031B /* HudsonServer.m in Sources */,
+				9C38D1741305D70E004E031B /* NSString+ListContains.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
