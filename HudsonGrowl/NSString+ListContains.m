@@ -25,10 +25,25 @@
 	
 	for (NSString *substring in list) {
 		if ([substring length] > 0) {
-			NSRange range = [self rangeOfString:substring options:NSCaseInsensitiveSearch];
-			if (range.location != NSNotFound) {
-				wasSubstringFound = YES;
-				break;
+			if ([substring hasPrefix:@"\""] && [substring hasSuffix:@"\""]) {
+				// perform an exact match
+				NSRange range;
+				range.location = 1;
+				range.length = [substring length]-2;
+				
+				substring = [substring substringWithRange:range];
+				NSRange matchRange = [self rangeOfString:substring options:NSCaseInsensitiveSearch];
+				if (matchRange.location == 0 && matchRange.length == [substring length]) {
+					wasSubstringFound = YES;
+					break;
+				}
+			} else {
+				// perform a substring match
+				NSRange range = [self rangeOfString:substring options:NSCaseInsensitiveSearch];
+				if (range.location != NSNotFound) {
+					wasSubstringFound = YES;
+					break;
+				}
 			}
 		}
 	}
