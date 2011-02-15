@@ -365,9 +365,15 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
                 
                 NSString* jobName = [[buildName substringWithRange:rangeOfJobName] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 NSInteger buildNr = [[[[entry elementsForName:@"number"] objectAtIndex:0] stringValue] intValue];
-                NSString* result = [[[entry elementsForName:@"result"] objectAtIndex:0] stringValue];
+				BOOL isBuilding = [[[[entry elementsForName:@"building"] objectAtIndex:0] stringValue] boolValue];
+                NSString *result = nil;
+				if (!isBuilding) {
+					result = [[[entry elementsForName:@"result"] objectAtIndex:0] stringValue];
+				} else {
+					result = @"IN PROGRESS";
+				}
                 NSString* link = [[[[entry elementsForName:@"url"] objectAtIndex:0] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                BOOL success = [result isEqual:@"SUCCESS"];
+                BOOL success = isBuilding || [result isEqual:@"SUCCESS"];
                     
                 HudsonJob* job = [HudsonJob jobWithName:jobName];
                 job.lastResult = [HudsonResult resultWithBuildNr:buildNr success:success link:link];
