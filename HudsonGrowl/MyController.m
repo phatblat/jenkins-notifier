@@ -320,9 +320,10 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 			jobName = [jobName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 			BOOL success = [result isEqual:@"(SUCCESS)"];
 			BOOL stable = [result isEqual:@"(stable)"];
+			BOOL backToNormal = [result isEqual:@"(back to normal)"];
             
             HudsonJob* job = [HudsonJob jobWithName:jobName];            
-            job.lastResult = [HudsonResult resultWithBuildNr:buildNr success:(success||stable) link:link];
+            job.lastResult = [HudsonResult resultWithBuildNr:buildNr success:(success||stable||backToNormal) link:link];
             [server.jobs addObject:job];
 		}
 	}
