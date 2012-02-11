@@ -11,8 +11,6 @@
 		256AC3DA0F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */; };
 		4317E1B413012C680073CEF9 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1B313012C680073CEF9 /* NSString+Base64.m */; };
 		433C0237118DC08E00A776D5 /* Gear.icns in Resources */ = {isa = PBXBuildFile; fileRef = 433C0236118DC08E00A776D5 /* Gear.icns */; };
-		43590588108BB5CD006ABCD5 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43590587108BB5CD006ABCD5 /* Growl.framework */; };
-		435905C6108BB664006ABCD5 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43590587108BB5CD006ABCD5 /* Growl.framework */; };
 		435905E8108BB6C8006ABCD5 /* HGrowl.m in Sources */ = {isa = PBXBuildFile; fileRef = 435905E7108BB6C8006ABCD5 /* HGrowl.m */; };
 		43590653108BBC8D006ABCD5 /* MyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43590652108BBC8D006ABCD5 /* MyController.m */; };
 		435907F4108C4CD4006ABCD5 /* HudsonResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 435907F3108C4CD4006ABCD5 /* HudsonResult.m */; };
@@ -32,6 +30,8 @@
 		9C38D1701305D6F4004E031B /* HudsonJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C38D16D1305D6F4004E031B /* HudsonJob.m */; };
 		9C38D1711305D6F4004E031B /* HudsonServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C38D16F1305D6F4004E031B /* HudsonServer.m */; };
 		9C38D1741305D70E004E031B /* NSString+ListContains.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C38D1731305D70E004E031B /* NSString+ListContains.m */; };
+		B5988B2214E61C3800BD6E8D /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5988B2114E61C3800BD6E8D /* Growl.framework */; };
+		B5988B2314E61CBA00BD6E8D /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5988B2114E61C3800BD6E8D /* Growl.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,7 +41,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				435905C6108BB664006ABCD5 /* Growl.framework in CopyFiles */,
+				B5988B2314E61CBA00BD6E8D /* Growl.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +61,6 @@
 		4317E1B213012C680073CEF9 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
 		4317E1B313012C680073CEF9 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		433C0236118DC08E00A776D5 /* Gear.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Gear.icns; path = Resources/Gear.icns; sourceTree = "<group>"; };
-		43590587108BB5CD006ABCD5 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		435905E6108BB6C8006ABCD5 /* HGrowl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGrowl.h; sourceTree = "<group>"; };
 		435905E7108BB6C8006ABCD5 /* HGrowl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HGrowl.m; sourceTree = "<group>"; };
 		4359061F108BB9F0006ABCD5 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
@@ -89,6 +88,7 @@
 		9C38D16F1305D6F4004E031B /* HudsonServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonServer.m; sourceTree = "<group>"; };
 		9C38D1721305D70E004E031B /* NSString+ListContains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ListContains.h"; sourceTree = "<group>"; };
 		9C38D1731305D70E004E031B /* NSString+ListContains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ListContains.m"; sourceTree = "<group>"; };
+		B5988B2114E61C3800BD6E8D /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +97,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				43590588108BB5CD006ABCD5 /* Growl.framework in Frameworks */,
 				8BC7EF36117791F900BBE8F3 /* SystemConfiguration.framework in Frameworks */,
+				B5988B2214E61C3800BD6E8D /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,8 +122,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5988B2114E61C3800BD6E8D /* Growl.framework */,
 				8BC7EF35117791F900BBE8F3 /* SystemConfiguration.framework */,
-				43590587108BB5CD006ABCD5 /* Growl.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
