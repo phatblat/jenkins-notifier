@@ -373,6 +373,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "Hudson Notifier";
 				SDKROOT = macosx10.6;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -393,6 +394,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "Hudson Notifier";
 				SDKROOT = macosx10.6;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
