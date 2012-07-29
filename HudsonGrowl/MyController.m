@@ -433,7 +433,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 			
 			if (result.success) {
 				[indicator setImage:[NSImage imageNamed:@"menu_success.png"]];
-				[indicator setTitle:[NSString stringWithFormat:@"%@ #%d", job.name, result.buildNr]];
+				[indicator setTitle:[NSString stringWithFormat:@"%@ #%ld", job.name, result.buildNr]];
 				[indicator setEnabled:YES];
 			
 				// Depending on settings: Only post the notification if different than last time OR post on all builds
@@ -441,7 +441,7 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 					[growl postNotificationWithName:GrowlHudsonSuccess
 												job:job.name
 											  title:job.name
-										description:[NSString stringWithFormat:@"Build successful (%d)", result.buildNr]
+										description:[NSString stringWithFormat:@"Build successful (%ld)", result.buildNr]
 											  image:[NSImage imageNamed:@"Clear Green Button.png"]
 										   isSticky:NO];
 
@@ -449,20 +449,20 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 					[growl postNotificationWithName:GrowlHudsonSuccess
 												job:job.name
 											  title:job.name
-										description:[NSString stringWithFormat:@"Build has been restored (%d)", result.buildNr]
+										description:[NSString stringWithFormat:@"Build has been restored (%ld)", result.buildNr]
 											  image:[NSImage imageNamed:@"Clear Green Button.png"]
 										   isSticky:(lastResult != nil && self.shouldUseStickyNotifications)];
 				}
 			} else {
 				[indicator setImage:[NSImage imageNamed:@"menu_failure.png"]];
-				[indicator setTitle:[NSString stringWithFormat:@"%@ #%d", job.name, result.buildNr]];
+				[indicator setTitle:[NSString stringWithFormat:@"%@ #%ld", job.name, result.buildNr]];
 				[indicator setEnabled:YES];
 
 				if (lastResult == nil || self.shouldUseContinuousNotifications || (result.success != lastResult.success)) {
 					[growl postNotificationWithName:GrowlHudsonFailure
 												job:job.name
 											  title:job.name
-										description:[NSString stringWithFormat:@"Build failed (%d)", result.buildNr]
+										description:[NSString stringWithFormat:@"Build failed (%ld)", result.buildNr]
 											  image:[NSImage imageNamed:@"Cancel Red Button.png"]
 										   isSticky:(lastResult != nil && (result.success != lastResult.success && self.shouldUseStickyNotifications))];
 				}
