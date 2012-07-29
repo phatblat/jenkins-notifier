@@ -23,6 +23,7 @@
 #import "HudsonJob.h"
 #import "HudsonResult.h"
 #import "HudsonServer.h"
+#import "UserNotifier.h"
 
 NSString *MyControllerFeedsKey = @"MyControllerFeedsKey";
 NSString *MyControllerWhitelistKey = @"MyControllerWhitelistKey";
@@ -31,6 +32,7 @@ NSString *MyControllerShouldUseStickyNotificationsKey = @"MyControllerShouldUseS
 NSString *MyControllerShouldUseContinuousNotificationsKey = @"MyControllerShouldUseContinuousNotificationsKey";
 NSString *MyControllerShouldPingBeforeConnectKey = @"MyControllerShouldPingBeforeConnectKey";
 NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMinutesKey";
+NSString *MyControllerShouldUseNSUserNotificationsKey = @"MyControllerShouldUseNSUserNotificationsKey";
 
 
 @interface MyController ()
@@ -84,9 +86,8 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 #pragma mark Application Delegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application 
-	HGrowl* growl = [HGrowl instance];
-	growl.clickDelegate = self;
+	// Insert code here to initialize your application
+  [self initNotifiers];
 	
 	// Init icon in tray
 	NSStatusBar *bar = [NSStatusBar systemStatusBar];
@@ -126,6 +127,13 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 													  userInfo:nil
 													   repeats:YES];
 	[self startUpdates:self.updateTimer];
+}
+
+- (void)initNotifiers
+{
+	HGrowl* growl = [HGrowl instance];
+	growl.clickDelegate = self;
+  
 }
 
 
@@ -397,8 +405,6 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 #pragma mark Status Management
 
 - (void) updateStatus:(HudsonServer*)server {
-	HGrowl* growl = [HGrowl instance];
-    
 	// update new build results
 	for (HudsonJob* job in [server filteredJobs]) {
 		HudsonResult* result = job.lastResult;
@@ -438,20 +444,20 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 			
 				// Depending on settings: Only post the notification if different than last time OR post on all builds
 				if (lastResult == nil || (self.shouldUseContinuousNotifications && result.success == lastResult.success)) {
-					[growl postNotificationWithName:GrowlHudsonSuccess
-												job:job.name
-											  title:job.name
-										description:[NSString stringWithFormat:@"Build successful (%ld)", result.buildNr]
-											  image:[NSImage imageNamed:@"Clear Green Button.png"]
-										   isSticky:NO];
+					[self postNotificationWithName:GrowlHudsonSuccess
+                                   job:job.name
+                                 title:job.name
+                           description:[NSString stringWithFormat:@"Build successful (%ld)", result.buildNr]
+                                 image:[NSImage imageNamed:@"Clear Green Button.png"]
+                              isSticky:NO];
 
 				} else if (result.success != lastResult.success) {
-					[growl postNotificationWithName:GrowlHudsonSuccess
-												job:job.name
-											  title:job.name
-										description:[NSString stringWithFormat:@"Build has been restored (%ld)", result.buildNr]
-											  image:[NSImage imageNamed:@"Clear Green Button.png"]
-										   isSticky:(lastResult != nil && self.shouldUseStickyNotifications)];
+					[self postNotificationWithName:GrowlHudsonSuccess
+                                   job:job.name
+                                 title:job.name
+                           description:[NSString stringWithFormat:@"Build has been restored (%ld)", result.buildNr]
+                                 image:[NSImage imageNamed:@"Clear Green Button.png"]
+                              isSticky:(lastResult != nil && self.shouldUseStickyNotifications)];
 				}
 			} else {
 				[indicator setImage:[NSImage imageNamed:@"menu_failure.png"]];
@@ -459,12 +465,12 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 				[indicator setEnabled:YES];
 
 				if (lastResult == nil || self.shouldUseContinuousNotifications || (result.success != lastResult.success)) {
-					[growl postNotificationWithName:GrowlHudsonFailure
-												job:job.name
-											  title:job.name
-										description:[NSString stringWithFormat:@"Build failed (%ld)", result.buildNr]
-											  image:[NSImage imageNamed:@"Cancel Red Button.png"]
-										   isSticky:(lastResult != nil && (result.success != lastResult.success && self.shouldUseStickyNotifications))];
+					[self postNotificationWithName:GrowlHudsonFailure
+                                   job:job.name
+                                 title:job.name
+                           description:[NSString stringWithFormat:@"Build failed (%ld)", result.buildNr]
+                                 image:[NSImage imageNamed:@"Cancel Red Button.png"]
+                              isSticky:(lastResult != nil && (result.success != lastResult.success && self.shouldUseStickyNotifications))];
 				}
 			}
 			
@@ -491,6 +497,36 @@ NSString *MyControllerPollIntervalInMinutesKey = @"MyControllerPollIntervalInMin
 	} else {
 		[theItem setImage:[NSImage imageNamed:@"icon2_failure.png"]];
 	}
+}
+
+- (BOOL)useUserNotifier
+{
+  return [[NSUserDefaults standardUserDefaults] boolForKey: MyControllerShouldUseNSUserNotificationsKey] && [UserNotifier isAvailable];
+}
+
+- (id)notifier
+{
+  if ([self useUserNotifier]) {
+    return [UserNotifier instance];
+  }
+  else {
+    return [HGrowl instance];
+  }
+}
+
+- (void)postNotificationWithName:(NSString*)notify
+                             job:(NSString*)job
+                           title:(NSString*)title
+                     description:(NSString*)desc
+                           image:(NSImage*)img
+                        isSticky:(BOOL)isSticky
+{
+  [[self notifier] postNotificationWithName:notify
+                                        job:job
+                                      title:title
+                                description:desc
+                                      image:img
+                                   isSticky:isSticky];
 }
 
 

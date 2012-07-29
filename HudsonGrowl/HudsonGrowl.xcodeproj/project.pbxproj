@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		179FCC0615C52579004298BA /* UserNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 179FCC0515C52579004298BA /* UserNotifier.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */; };
 		4317E1B413012C680073CEF9 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1B313012C680073CEF9 /* NSString+Base64.m */; };
@@ -51,6 +52,8 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		179FCC0415C52579004298BA /* UserNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserNotifier.h; sourceTree = "<group>"; };
+		179FCC0515C52579004298BA /* UserNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserNotifier.m; sourceTree = "<group>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* HudsonGrowlAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudsonGrowlAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonGrowlAppDelegate.m; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 				4359061F108BB9F0006ABCD5 /* SynthesizeSingleton.h */,
 				435905E6108BB6C8006ABCD5 /* HGrowl.h */,
 				435905E7108BB6C8006ABCD5 /* HGrowl.m */,
+				179FCC0415C52579004298BA /* UserNotifier.h */,
+				179FCC0515C52579004298BA /* UserNotifier.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 				9C38D1701305D6F4004E031B /* HudsonJob.m in Sources */,
 				9C38D1711305D6F4004E031B /* HudsonServer.m in Sources */,
 				9C38D1741305D70E004E031B /* NSString+ListContains.m in Sources */,
+				179FCC0615C52579004298BA /* UserNotifier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
