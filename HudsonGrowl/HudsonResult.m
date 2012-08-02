@@ -38,7 +38,7 @@
 
 
 - (NSString*) description {
-	return [NSString stringWithFormat:@"buildNr: %d, success: %d, link: '%@'", buildNr, success, link];
+	return [NSString stringWithFormat:@"buildNr: %ld, success: %d, link: '%@'", buildNr, success, link];
 }
 
 
