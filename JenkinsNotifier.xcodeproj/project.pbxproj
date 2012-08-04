@@ -150,7 +150,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* HudsonGrowl */ = {
+		29B97314FDCFA39411CA2CEA /* JenkinsNotifier */ = {
 			isa = PBXGroup;
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -159,7 +159,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
-			name = HudsonGrowl;
+			name = JenkinsNotifier;
 			sourceTree = "<group>";
 		};
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
@@ -257,9 +257,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* Jenkins Notifier */ = {
+		8D1107260486CEB800E47090 /* JenkinsNotifier */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Jenkins Notifier" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "JenkinsNotifier" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -270,9 +270,9 @@
 			);
 			dependencies = (
 			);
-			name = "Jenkins Notifier";
+			name = JenkinsNotifier;
 			productInstallPath = "$(HOME)/Applications";
-			productName = HudsonGrowl;
+			productName = JenkinsNotifier;
 			productReference = 8D1107320486CEB800E47090 /* JenkinsNotifier.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -288,11 +288,11 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA /* HudsonGrowl */;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* JenkinsNotifier */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* Jenkins Notifier */,
+				8D1107260486CEB800E47090 /* JenkinsNotifier */,
 			);
 		};
 /* End PBXProject section */
@@ -437,7 +437,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Jenkins Notifier" */ = {
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "JenkinsNotifier" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
