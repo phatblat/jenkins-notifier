@@ -1,1 +1,6 @@
+.DS_Store
+build/
+builds/
 downloads
+xcuserdata
+*.xcodeproj/*.xcworkspace/
