@@ -1,6 +1,6 @@
 //
 //  HudsonServer.h
-//  HudsonGrowl
+//  JenkinsNotifier
 //
 //  Created by Benjamin Broll on 13.11.10.
 //

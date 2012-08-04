@@ -1,6 +1,6 @@
 //
 //  HudsonAPIQuery.m
-//  HudsonGrowl
+//  JenkinsNotifier
 //
 //  Created by Benjamin Broll on 02.05.10.
 //

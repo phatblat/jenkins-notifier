@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		179FCC0615C52579004298BA /* UserNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 179FCC0515C52579004298BA /* UserNotifier.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		256AC3DA0F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */; };
+		256AC3DA0F4B6AC300CF3369 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* AppDelegate.m */; };
 		4317E1B413012C680073CEF9 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E1B313012C680073CEF9 /* NSString+Base64.m */; };
 		433C0237118DC08E00A776D5 /* Gear.icns in Resources */ = {isa = PBXBuildFile; fileRef = 433C0236118DC08E00A776D5 /* Gear.icns */; };
 		435905E8108BB6C8006ABCD5 /* HGrowl.m in Sources */ = {isa = PBXBuildFile; fileRef = 435905E7108BB6C8006ABCD5 /* HGrowl.m */; };
@@ -55,9 +55,8 @@
 		179FCC0415C52579004298BA /* UserNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserNotifier.h; sourceTree = "<group>"; };
 		179FCC0515C52579004298BA /* UserNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserNotifier.m; sourceTree = "<group>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		256AC3D80F4B6AC300CF3369 /* HudsonGrowlAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudsonGrowlAppDelegate.h; sourceTree = "<group>"; };
-		256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonGrowlAppDelegate.m; sourceTree = "<group>"; };
-		256AC3F00F4B6AF500CF3369 /* HudsonGrowl_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudsonGrowl_Prefix.pch; sourceTree = "<group>"; };
+		256AC3D80F4B6AC300CF3369 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		256AC3D90F4B6AC300CF3369 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -82,7 +81,7 @@
 		43BD7F9D118DAC3C00E04E4C /* HudsonAPIQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonAPIQuery.m; sourceTree = "<group>"; };
 		43F8E99C1300B91B00BE37CF /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
 		43F8E99D1300B91B00BE37CF /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* HudsonGrowl-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HudsonGrowl-Info.plist"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* JenkinsNotifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JenkinsNotifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C38D16C1305D6F4004E031B /* HudsonJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudsonJob.h; sourceTree = "<group>"; };
 		9C38D16D1305D6F4004E031B /* HudsonJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudsonJob.m; sourceTree = "<group>"; };
@@ -92,6 +91,7 @@
 		9C38D1731305D70E004E031B /* NSString+ListContains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ListContains.m"; sourceTree = "<group>"; };
 		B5988B2114E61C3800BD6E8D /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		B5A6A15815CB7FF700108065 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		B5D0E7B115CCD0F10018FB39 /* JenkinsNotifier_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JenkinsNotifier_Prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,8 +116,8 @@
 				433C1EF1128F4B830084A264 /* Extensions */,
 				433C1EEF128F4B520084A264 /* Model */,
 				433C1EF2128F4BA20084A264 /* Utilities */,
-				256AC3D80F4B6AC300CF3369 /* HudsonGrowlAppDelegate.h */,
-				256AC3D90F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m */,
+				256AC3D80F4B6AC300CF3369 /* AppDelegate.h */,
+				256AC3D90F4B6AC300CF3369 /* AppDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -165,7 +165,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				256AC3F00F4B6AF500CF3369 /* HudsonGrowl_Prefix.pch */,
+				B5D0E7B115CCD0F10018FB39 /* JenkinsNotifier_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
@@ -182,7 +182,7 @@
 				433C0236118DC08E00A776D5 /* Gear.icns */,
 				43590871108D0607006ABCD5 /* Cancel Red Button.png */,
 				43590872108D0607006ABCD5 /* Clear Green Button.png */,
-				8D1107310486CEB800E47090 /* HudsonGrowl-Info.plist */,
+				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 			);
@@ -323,7 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				256AC3DA0F4B6AC300CF3369 /* HudsonGrowlAppDelegate.m in Sources */,
+				256AC3DA0F4B6AC300CF3369 /* AppDelegate.m in Sources */,
 				435905E8108BB6C8006ABCD5 /* HGrowl.m in Sources */,
 				43590653108BBC8D006ABCD5 /* MyController.m in Sources */,
 				435907F4108C4CD4006ABCD5 /* HudsonResult.m in Sources */,
@@ -375,8 +375,8 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = HudsonGrowl_Prefix.pch;
-				INFOPLIST_FILE = "HudsonGrowl-Info.plist";
+				GCC_PREFIX_HEADER = JenkinsNotifier_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = JenkinsNotifier;
 				SDKROOT = macosx;
@@ -397,8 +397,8 @@
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = HudsonGrowl_Prefix.pch;
-				INFOPLIST_FILE = "HudsonGrowl-Info.plist";
+				GCC_PREFIX_HEADER = JenkinsNotifier_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = JenkinsNotifier;
 				SDKROOT = macosx;

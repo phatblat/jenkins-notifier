@@ -1,6 +1,6 @@
 //
 //  MyController.h
-//  HudsonGrowl
+//  JenkinsNotifier
 //
 //  Created by Benjamin Broll on 18.10.09.
 //

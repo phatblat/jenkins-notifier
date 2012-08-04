@@ -1,6 +1,6 @@
 //
-//  HudsonGrowlAppDelegate.h
-//  HudsonGrowl
+//  AppDelegate.h
+//  JenkinsNotifier
 //
 //  Created by Benjamin Broll on 18.10.09.
 //
@@ -20,9 +20,9 @@
 
 
 #if (MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5)
-@interface HudsonGrowlAppDelegate : NSObject
+@interface AppDelegate : NSObject
 #else
-@interface HudsonGrowlAppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate>
 #endif
 {
 

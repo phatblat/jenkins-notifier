@@ -1,6 +1,6 @@
 //
 //  NSString+ListContains.m
-//  HudsonGrowl
+//  JenkinsNotifier
 //
 //  Created by Benjamin Broll on 14.11.10.
 //

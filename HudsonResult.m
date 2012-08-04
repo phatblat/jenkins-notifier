@@ -1,6 +1,6 @@
 //
 //  HudsonResult.m
-//  HudsonGrowl
+//  JenkinsNotifier
 //
 //  Created by Benjamin Broll on 19.10.09.
 //

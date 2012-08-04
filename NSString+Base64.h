@@ -1,6 +1,6 @@
 //
 //  NSString+Base64.h
-//  HudsonGrowl
+//  JenkinsNotifier
 //
 //  Created by Benjamin Broll on 06.12.10.
 //

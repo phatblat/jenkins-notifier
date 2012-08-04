@@ -1,6 +1,6 @@
 //
-//  HudsonGrowlAppDelegate.m
-//  HudsonGrowl
+//  AppDelegate.m
+//  JenkinsNotifier
 //
 //  Created by Benjamin Broll on 18.10.09.
 //
@@ -14,10 +14,10 @@
 //  CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import "HudsonGrowlAppDelegate.h"
+#import "AppDelegate.h"
 
 
-@implementation HudsonGrowlAppDelegate
+@implementation AppDelegate
 
 
 @end

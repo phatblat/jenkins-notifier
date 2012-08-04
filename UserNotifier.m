@@ -1,6 +1,6 @@
 //
 //  UserNotifier.m
-//  HudsonGrowl
+//  JenkinsNotifier
 //
 //  Created on 7/29/12.
 //
